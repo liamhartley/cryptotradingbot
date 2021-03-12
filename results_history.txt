@@ -1,0 +1,175 @@
+2021-03-03 08:14:53
+-------------- Benchmark ---------------
+Capital      : 1000.00
+Final Equity : 2717.93
+Net profit   : 1717.93 (+171.79%)
+Max Drawdown : -25.21%
+--------------- Strategy ---------------
+Capital      : 1000.00
+Final Equity : 1000.00
+Net profit   : 0.00 (+0.00%)
+Max Drawdown : 0.00%
+Sharpe Ratio : nan
+Sortino Ratio: nan
+Alpha        : 0.00
+Beta         : 0.00
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 0
+Sells        : 0
+Shorts       : 0
+Covers       : 0
+Total Trades : 0
+--------------------------------------------------
+
+
+2021-03-04 08:26:49
+-------------- Benchmark ---------------
+Capital      : 1000.00
+Final Equity : 2633.46
+Net profit   : 1633.46 (+163.35%)
+Max Drawdown : -25.21%
+--------------- Strategy ---------------
+Capital      : 1000.00
+Final Equity : 1000.00
+Net profit   : 0.00 (+0.00%)
+Max Drawdown : 0.00%
+Sharpe Ratio : nan
+Sortino Ratio: nan
+Alpha        : 0.00
+Beta         : 0.00
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 0
+Sells        : 0
+Shorts       : 0
+Covers       : 0
+Total Trades : 0
+--------------------------------------------------
+
+
+2021-03-04 08:28:05
+-------------- Benchmark ---------------
+Capital      : 1000.00
+Final Equity : 2626.90
+Net profit   : 1626.90 (+162.69%)
+Max Drawdown : -25.21%
+--------------- Strategy ---------------
+Capital      : 1000.00
+Final Equity : 1000.00
+Net profit   : 0.00 (+0.00%)
+Max Drawdown : 0.00%
+Sharpe Ratio : nan
+Sortino Ratio: nan
+Alpha        : 0.00
+Beta         : 0.00
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 0
+Sells        : 0
+Shorts       : 0
+Covers       : 0
+Total Trades : 0
+--------------------------------------------------
+
+
+2021-03-04 08:28:42
+-------------- Benchmark ---------------
+Capital      : 1000.00
+Final Equity : 2626.90
+Net profit   : 1626.90 (+162.69%)
+Max Drawdown : -25.21%
+--------------- Strategy ---------------
+Capital      : 1000.00
+Final Equity : 1000.00
+Net profit   : 0.00 (+0.00%)
+Max Drawdown : 0.00%
+Sharpe Ratio : nan
+Sortino Ratio: nan
+Alpha        : 0.00
+Beta         : 0.00
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 0
+Sells        : 0
+Shorts       : 0
+Covers       : 0
+Total Trades : 0
+--------------------------------------------------
+
+
+2021-03-04 08:30:33
+-------------- Benchmark ---------------
+Capital      : 1000.00
+Final Equity : 2634.06
+Net profit   : 1634.06 (+163.41%)
+Max Drawdown : -25.21%
+--------------- Strategy ---------------
+Capital      : 1000.00
+Final Equity : 1096.66
+Net profit   : 96.66 (+9.67%)
+Max Drawdown : -6.20%
+Sharpe Ratio : 1.86
+Sortino Ratio: 3.56
+Alpha        : -0.08
+Beta         : 0.12
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 4
+Sells        : 0
+Shorts       : 0
+Covers       : 0
+Total Trades : 4
+--------------------------------------------------
+
+
+2021-03-04 18:27:48
+-------------- Benchmark ---------------
+Capital      : 1000.00
+Final Equity : 2522.65
+Net profit   : 1522.65 (+152.26%)
+Max Drawdown : -25.21%
+--------------- Strategy ---------------
+Capital      : 1000.00
+Final Equity : 1858.53
+Net profit   : 858.53 (+85.85%)
+Max Drawdown : -22.27%
+Sharpe Ratio : 2.76
+Sortino Ratio: 5.09
+Alpha        : -0.21
+Beta         : 0.75
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 13
+Sells        : 4
+Shorts       : 0
+Covers       : 0
+Total Trades : 17
+--------------------------------------------------
+
+
+2021-03-04 18:30:22
+-------------- Benchmark ---------------
+Capital      : 1000.00
+Final Equity : 2524.58
+Net profit   : 1524.58 (+152.46%)
+Max Drawdown : -25.21%
+--------------- Strategy ---------------
+Capital      : 1000.00
+Final Equity : 1859.66
+Net profit   : 859.66 (+85.97%)
+Max Drawdown : -22.27%
+Sharpe Ratio : 2.76
+Sortino Ratio: 5.10
+Alpha        : -0.21
+Beta         : 0.75
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 13
+Sells        : 4
+Shorts       : 0
+Covers       : 0
+Total Trades : 17
+--------------------------------------------------
+
+
