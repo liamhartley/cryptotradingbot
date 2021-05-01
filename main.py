@@ -61,4 +61,3 @@ if __name__ == '__main__':
     backtesting_engine = Gemini(logic=cmo_trading_strategy, sim_params=params, analyze=analyze.analyze_bokeh)
     backtesting_engine.run(data=data_df)
 
-    print(data_df)
