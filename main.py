@@ -11,7 +11,7 @@ OVERBOUGHT_VALUE = 50
 OVERSOLD_VALUE = -50
 
 params = {
-    'capital_base': 1000,
+    'capital_base': 10,
     'data_frequency': 'D',
     'fees': {
         'open_fee': 0.0001,
