@@ -448,3 +448,28 @@ Total Trades : 20
 --------------------------------------------------
 
 
+2021-05-02 10:38:23
+-------------- Benchmark ---------------
+Capital      : 10.00
+Final Equity : 17.07
+Net profit   : 7.07 (+70.68%)
+Max Drawdown : -22.76%
+--------------- Strategy ---------------
+Capital      : 10.00
+Final Equity : 11.47
+Net profit   : 1.47 (+14.75%)
+Max Drawdown : -21.88%
+Sharpe Ratio : 0.98
+Sortino Ratio: 1.57
+Alpha        : -0.53
+Beta         : 0.63
+Fees paid    : 0.00
+-------------- Statistics --------------
+Longs        : 12
+Sells        : 8
+Shorts       : 0
+Covers       : 0
+Total Trades : 20
+--------------------------------------------------
+
+
