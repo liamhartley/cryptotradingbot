@@ -85,4 +85,4 @@ In the future I would love to see all sorts of strategies in this repo!
 
 If this project helped you learn Python or has helped you make some money then I would love any tips in Dogecoin!
 
-My wallet address is: 
+My wallet address is: DS7JRhMmL9RdXruqz5ubDaR3R8SNtoUi6i
