@@ -11,7 +11,7 @@ OVERBOUGHT_VALUE = 50
 OVERSOLD_VALUE = -50
 
 params = {
-    'capital_base': 1000,
+    'capital_base': 10,
     'data_frequency': 'D',
     'fees': {
         'open_fee': 0.0001,
@@ -61,4 +61,3 @@ if __name__ == '__main__':
     backtesting_engine = Gemini(logic=cmo_trading_strategy, sim_params=params, analyze=analyze.analyze_bokeh)
     backtesting_engine.run(data=data_df)
 
-    print(data_df)
