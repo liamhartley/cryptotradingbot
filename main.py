@@ -1,18 +1,19 @@
 from gemini.gemini_core.gemini_master import Gemini
 from gemini.helpers import poloniex, analyze
 
-# TODO optimise params
+# TODO optimise params by looping through different values, currency pairs etc
 CMO_PERIOD = 9
 PAIR = "BTC_USDT"
 PERIOD = 1800
 DAYS_HISTORY = 100
-
 OVERBOUGHT_VALUE = 50
 OVERSOLD_VALUE = -50
 
 params = {
+    # TODO link
     'capital_base': 10,
     'data_frequency': 'D',
+    # TODO check these
     'fees': {
         'open_fee': 0.0001,
         'close_fee': 0.0001
@@ -20,7 +21,7 @@ params = {
 }
 
 
-def cmo_logic(data):
+def cmo_logic(data) -> float:
     last_day = len(data)
     first_day = len(data) - CMO_PERIOD
 
@@ -43,6 +44,7 @@ def cmo_trading_strategy(gemini, data):
         cmo = cmo_logic(data)
         assert -100 <= cmo <= 100
 
+        # TODO optimise the params here
         if cmo < OVERSOLD_VALUE:
             gemini.account.close_position(position=gemini.account.positions[0],
                                           percent=1,
@@ -56,8 +58,12 @@ def cmo_trading_strategy(gemini, data):
 
 
 if __name__ == '__main__':
+    # load backtesting data
     data_df = poloniex.load_dataframe(pair=PAIR, period=PERIOD, days_history=DAYS_HISTORY)
 
+    # load backtesting engine with your strategy
     backtesting_engine = Gemini(logic=cmo_trading_strategy, sim_params=params, analyze=analyze.analyze_bokeh)
+
+    # run the backtesting engine
     backtesting_engine.run(data=data_df)
 
