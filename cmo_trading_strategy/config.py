@@ -1,0 +1,5 @@
+LOGICAL_PARAMS = {
+    "CMO_PERIOD": 9,
+    "PERIOD": 86400,
+    "PAIR": "BTC_USDT"
+}

@@ -52,17 +52,17 @@ TODO
 Any 'TODO' tags in the project.
 
 <a name="calculationimprovements"></a>
-##### Calculation Improvements
+#### Calculation Improvements
 - Optimise variables
 
 <a name="platformimprovements"></a>
-##### Platform Improvements
+#### Platform Improvements
 - Develop terraform infrastructure with AWS.
 - Save all data to S3
 - Develop unittests
 
 <a name="condequalityimprovements"></a>
-##### Code Quality Imrpovements
+#### Code Quality Imrpovements
 
 <a name="howtocontribute"></a>
 ## How to Contribute 
