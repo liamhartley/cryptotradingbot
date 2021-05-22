@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "cryptotradingbot_cmo" {
-  filename = "../payload.zip"
+  filename = "../app/payload.zip"
   function_name = "cryptotradingbot_cmo"
   handler = "app.lambda_handler"
   role = "${aws_iam_role.crypto_lambda_execution_role.arn}"

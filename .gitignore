@@ -1,3 +1,7 @@
+cmo_trading_strategy/app/payload/
+
+results.html
+
 .idea/
 *.iml
 venv
