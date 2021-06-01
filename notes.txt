@@ -1,9 +1,0 @@
-pre-film:
-- update the s3.tf
-- check that the code moves after moving it
-- delete some html if possible
-- get it working in IDE
-
-film:
-- deploy the terraform code
-- set it up to run in AWS

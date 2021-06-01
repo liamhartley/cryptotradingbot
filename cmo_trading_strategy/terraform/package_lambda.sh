@@ -11,6 +11,7 @@ declare -A scripts=(
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/config.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/cmo_trading_strategy/config/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_wrapper_bwentzloff.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/trading_tools/"
                   ["/Users/liamhartley/PycharmProjects/Gemini/gemini/helpers/poloniex.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/gemini/helpers/"
+# had to copy pandas in manually (script needs updating) ["/Users/liamhartley/PycharmProjects/cryptotradingbot/venv/lib/python3.9/site-packages/pandas/*"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/gemini/helpers/pandas"
                   )
 
 # copy all scripts into the payload directory

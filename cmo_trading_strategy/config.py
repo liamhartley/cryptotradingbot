@@ -1,7 +1,7 @@
 LOGICAL_PARAMS = {
-    "CMO_PERIOD": 9,
+    "CMO_PERIOD": 10,
     "PERIOD": 86400,
-    "PAIR": "BTC_USDT",
+    "PAIR": "XRP_BTC",
     "OVERSOLD_VALUE": -50,
     "OVERBOUGHT_VALUE": 50,
     "DRY_RUN": True,
@@ -11,5 +11,5 @@ LOGICAL_PARAMS = {
 
 INFRASTRUCTURE_PARAMS = {
     "S3_BUCKET_NAME": "cryptotradingbot-liamhartley",
-    "AWS_REGION": "eu-west-2"
+    "AWS_REGION": "eu-west-1"
 }

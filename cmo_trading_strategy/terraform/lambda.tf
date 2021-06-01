@@ -2,7 +2,7 @@ resource "aws_lambda_function" "cryptotradingbot_cmo" {
   filename = "../app/payload.zip"
   function_name = "cryptotradingbot_cmo"
   handler = "app.lambda_handler"
-  role = "${aws_iam_role.crypto_lambda_execution_role.arn}"
+  role = aws_iam_role.crypto_lambda_execution_role.arn
   runtime = "python3.7"
   timeout = "300"
 

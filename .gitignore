@@ -5,3 +5,11 @@ results.html
 .idea/
 *.iml
 venv
+
+.terraform/
+cmo_trading_strategy/backtesting/__pycache__/
+cmo_trading_strategy/__pycache__/
+trading_tools/__pycache__/
+
+cmo_trading_strategy/terraform/terraform.tfstate
+cmo_trading_strategy/terraform/terraform.tfstate.backup

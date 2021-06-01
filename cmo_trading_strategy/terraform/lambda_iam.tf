@@ -1,6 +1,6 @@
 resource "aws_iam_role" "crypto_lambda_execution_role" {
   name = "crypto_lambda_execution_role"
-  assume_role_policy = data.aws_iam_policy_document.lambda_trust_policy.json
+  assume_role_policy = data.aws_iam_policy_document.crypto_lambda_trust_policy.json
 }
 
 data "aws_iam_policy_document" "crypto_lambda_trust_policy"{
@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "crypto_lambda_execution_policy_document" {
 }
 
 resource "aws_iam_policy" "crypto_lambda_execution_policy" {
-  name = "lambda_execution_policy"
+  name = "crypto_lambda_execution_policy"
   policy = data.aws_iam_policy_document.crypto_lambda_execution_policy_document.json
 }
 

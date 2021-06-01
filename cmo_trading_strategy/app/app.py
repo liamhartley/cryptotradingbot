@@ -1,6 +1,7 @@
 import os
 import boto3
 
+from datetime import datetime
 from gemini.helpers import poloniex
 from cmo_trading_strategy.backtesting.backtesting import cmo_logic
 from cmo_trading_strategy.config import LOGICAL_PARAMS, INFRASTRUCTURE_PARAMS
@@ -94,7 +95,7 @@ def s3_logger(message):
         )
         object = s3.Object(
             INFRASTRUCTURE_PARAMS['S3_BUCKET_NAME'],
-            'cmo_trading_strategy_audit/.txt'
+            f'{datetime.strftime(datetime.now(),"%m%d%y_%H%M")}_cmo_trading_strategy_audit/.txt'
         )
         response = object.put(Body=message)
     else:
@@ -105,8 +106,8 @@ def s3_logger(message):
 def lambda_handler(event, context):
 
     poloniex_wrapper = Poloniex(
-        APIKey=os.getenv('API_KEY'),
-        Secret=os.getenv('SECRET')
+        APIKey=os.getenv('POLONIEX_API_KEY'),
+        Secret=os.getenv('POLONIEX_SECRET_KEY')
     )
 
     base_currency = LOGICAL_PARAMS['PAIR'].split('_')[0]
@@ -116,9 +117,9 @@ def lambda_handler(event, context):
     cmo = check_cmo()
 
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
-        response = close_positions(poloniex_wrapper, base_currency)
-    elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
         response = enter_position(poloniex_wrapper, base_currency, quote_currency)
+    elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
+        response = close_positions(poloniex_wrapper, base_currency)
     else:
         response = None
 
