@@ -13,3 +13,5 @@ trading_tools/__pycache__/
 
 cmo_trading_strategy/terraform/terraform.tfstate
 cmo_trading_strategy/terraform/terraform.tfstate.backup
+
+notes.txt

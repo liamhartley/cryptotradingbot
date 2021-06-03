@@ -1,7 +1,7 @@
 LOGICAL_PARAMS = {
     "CMO_PERIOD": 10,
     "PERIOD": 86400,
-    "PAIR": "XRP_BTC",
+    "PAIR": "BTC_XRP",
     "OVERSOLD_VALUE": -50,
     "OVERBOUGHT_VALUE": 50,
     "DRY_RUN": True,

@@ -2,27 +2,9 @@ import os
 import boto3
 
 from datetime import datetime
-from gemini.helpers import poloniex
-from cmo_trading_strategy.backtesting.backtesting import cmo_logic
 from cmo_trading_strategy.config import LOGICAL_PARAMS, INFRASTRUCTURE_PARAMS
 from trading_tools.poloniex_wrapper_bwentzloff import Poloniex
-
-
-def check_cmo():
-    past_data = poloniex.load_dataframe(
-        pair=LOGICAL_PARAMS["PAIR"],
-        period=LOGICAL_PARAMS["PERIOD"],
-        days_history=LOGICAL_PARAMS["CMO_PERIOD"]
-    )
-
-    if len(past_data)-1 == LOGICAL_PARAMS["CMO_PERIOD"]:
-        past_data = past_data[1:]
-    elif len(past_data) == LOGICAL_PARAMS["CMO_PERIOD"]:
-        pass
-    else:
-        raise Exception("Invalid CMO check")
-    cmo = cmo_logic(past_data)
-    return cmo
+from trading_tools.cmo_calculation import cmo_logic_no_pandas
 
 
 def close_positions(poloniex_wrapper, base_currency, quote_currency):
@@ -114,7 +96,7 @@ def lambda_handler(event, context):
     quote_currency = LOGICAL_PARAMS['PAIR'].split('_')[1]
     assert base_currency+'_'+quote_currency == LOGICAL_PARAMS['PAIR']
 
-    cmo = check_cmo()
+    cmo = cmo_logic_no_pandas()
 
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
         response = enter_position(poloniex_wrapper, base_currency, quote_currency)
