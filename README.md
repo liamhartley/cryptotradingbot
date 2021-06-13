@@ -37,6 +37,13 @@ To install requirements file (inside project root): `pip install  -r requirement
 
 To upgrade to the latest backtesting package: `pip install  git+https://github.com/liamhartley/Gemini.git --upgrade`
 
+#### Terraform Deployment
+
+- Navigate to the root directory of the project
+- Run the "package_lambda.sh" script in <strategy>/terraform
+- Run Terraform init in the terraform directory to download the required modules
+- Run Terraform plan in the Terraform directory to ensure that your plan is working as expected
+- Run Terraform apply in the Terraform directory to deploy the cloud infrastructure
 
 <a name="usage"></a>
 ## Usage 
@@ -52,17 +59,17 @@ TODO
 Any 'TODO' tags in the project.
 
 <a name="calculationimprovements"></a>
-##### Calculation Improvements
+#### Calculation Improvements
 - Optimise variables
 
 <a name="platformimprovements"></a>
-##### Platform Improvements
+#### Platform Improvements
 - Develop terraform infrastructure with AWS.
 - Save all data to S3
 - Develop unittests
 
 <a name="condequalityimprovements"></a>
-##### Code Quality Imrpovements
+#### Code Quality Imrpovements
 
 <a name="howtocontribute"></a>
 ## How to Contribute 
