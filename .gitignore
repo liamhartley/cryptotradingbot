@@ -7,6 +7,7 @@ results.html
 venv
 
 .terraform/
+terraform.tfvars
 cmo_trading_strategy/backtesting/__pycache__/
 cmo_trading_strategy/__pycache__/
 trading_tools/__pycache__/

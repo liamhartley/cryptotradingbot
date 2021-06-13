@@ -37,10 +37,10 @@ echo $BASH_VERSION
 
 ########## work laptop paths ##########
 declare -A scripts=(
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/app.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/"
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/config.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/cmo_trading_strategy/"
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_wrapper_bwentzloff.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/trading_tools/"
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_tools/cmo_calculation.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/trading_tools/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/app.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/config.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/cmo_trading_strategy/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_wrapper_bwentzloff.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/trading_tools/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/cmo_calculation.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/trading_tools/"
                   )
 # had to copy pandas in manually (script needs updating) ["/Users/liamhartley/PycharmProjects/cryptotradingbot/venv/lib/python3.9/site-packages/pandas/*"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/gemini/helpers/pandas"
 
@@ -55,8 +55,8 @@ done
 
 ### zipping ###
 echo "zipping"
-zip_destination_location="/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload.zip"
-payload_location="/Users/liam.hartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/"
+zip_destination_location="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload.zip"
+payload_location="/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/app/payload/"
 
 cd "$payload_location" || exit
 zip -r "$zip_destination_location" *

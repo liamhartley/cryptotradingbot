@@ -77,7 +77,7 @@ def s3_logger(message):
         )
         object = s3.Object(
             INFRASTRUCTURE_PARAMS['S3_BUCKET_NAME'],
-            f'{datetime.strftime(datetime.now(),"%m%d%y_%H%M")}_cmo_trading_strategy_audit/.txt'
+            f'{datetime.strftime(datetime.now(),"%m%d%y_%H%M")}_cmo_trading_strategy_audit.txt'
         )
         response = object.put(Body=message)
     else:
