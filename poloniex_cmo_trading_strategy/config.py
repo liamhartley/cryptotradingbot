@@ -4,7 +4,7 @@ LOGICAL_PARAMS = {
     "PAIR": "BTC_XRP",
     "OVERSOLD_VALUE": -50,
     "OVERBOUGHT_VALUE": 50,
-    "DRY_RUN": True,
+    "DRY_RUN": False,
     "INITIAL_CAPITAL": 100,  # in quote currency
     "ENTRY_SIZE": 0.1  # 10%
 }

@@ -1,4 +1,4 @@
-cmo_trading_strategy/app/payload/
+poloniex_cmo_trading_strategy/app/payload/
 
 results.html
 
@@ -8,11 +8,11 @@ venv
 
 .terraform/
 terraform.tfvars
-cmo_trading_strategy/backtesting/__pycache__/
-cmo_trading_strategy/__pycache__/
+poloniex_cmo_trading_strategy/backtesting/__pycache__/
+poloniex_cmo_trading_strategy/__pycache__/
 trading_tools/__pycache__/
 
-cmo_trading_strategy/terraform/terraform.tfstate
-cmo_trading_strategy/terraform/terraform.tfstate.backup
+poloniex_cmo_trading_strategy/terraform/terraform.tfstate
+poloniex_cmo_trading_strategy/terraform/terraform.tfstate.backup
 
 notes.txt
