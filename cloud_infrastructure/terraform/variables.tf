@@ -1,3 +1,7 @@
+variable "project_name" {
+  type = string
+}
+
 variable "POLONIEX_API_KEY" {
   type = string
 }

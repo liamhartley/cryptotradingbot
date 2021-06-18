@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_event_rule" "every_hour" {
-  name = "every-hour"
+  name = "${var.project_name}-every-hour"
   description = "sends a trigger every hour"
   schedule_expression = "rate(1 hour)"
   is_enabled = false
