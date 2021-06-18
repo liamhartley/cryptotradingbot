@@ -98,15 +98,20 @@ def lambda_handler(event, context):
 
     cmo = cmo_logic_no_pandas()
 
+    # asset oversold
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
         response = enter_position(poloniex_wrapper, base_currency, quote_currency)
+    # asset overbought
     elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
         response = close_positions(poloniex_wrapper, base_currency)
     else:
         response = None
 
     s3_response = s3_logger(message=response)
-    print(s3_response)
+    print(f'CMO: {cmo}')
+    print(f's3_response: {s3_response}')
+    for key in LOGICAL_PARAMS:
+        print(f'{key}: {LOGICAL_PARAMS[key]}')
 
 
 if __name__ == '__main__':

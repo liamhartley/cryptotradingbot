@@ -120,7 +120,7 @@ if __name__ == '__main__':
         backtesting_engine.run(data=data_df)
 
         backtesting_engine.save_results_to_csv(
-            filepath='/Users/liamhartley/PycharmProjects/cryptotradingbot/cmo_trading_strategy/optimisation/optimisation_results.csv',
+            filepath='/Users/liamhartley/PycharmProjects/cryptotradingbot/poloniex_cmo_trading_strategy/optimisation/optimisation_results.csv',
             additional_datapoints=[PAIR,
                                    CMO_PERIOD,
                                    OVERSOLD_VALUE,

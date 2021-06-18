@@ -2,80 +2,50 @@
 
 ## Contents
 0. [Introduction](#introduction)
-1. [Setup](#setup) 
-2. [Usage](#usage)
-3. [Project Architecture](#projectarchitecture)
-4. [Future Improvements](#futureimprovements)
-    1. [Calculation Improvements](#calculationimprovements)
-    2. [Platform Improvements](#platformimprovements)
-    3. [Code Quality Improvements](#codequalityimprovements)
-5. [How to Contribute](#howtocontribute)
-6. [Further Reading](#furtherreading)
-7. [Acknowledgements](#acknowledgements)
-8. [Donations](#donations)
+1. [Trading Strategies](#strategies)
+1. [Usage](#usage)
+2. [Future Improvements](#futureimprovements)
+3. [How to Contribute](#howtocontribute)
+4. [Further Reading](#furtherreading)
+5. [Donations](#donations)
 
 <a name="introduction"></a>
 ## Introduction 
 
-A project to automatically run technical analysis strategies on cryptocurrencies whilst you sleep.
+A project to automatically run technical analysis strategies on AWS to trade cryptocurrencies whilst you sleep.
 
-The aim of project is to deploy a strategy onto AWS via Terraform.
+This project aims to have multiple trading strategies that can all be deployed into AWS using Terraform.
 
-You can watch YouTube videos about the project [here](https://www.youtube.com/channel/UCO_ge4iFmbKay3HVYNd7dAQ) 
-and read more about the project [here](https://medium.datadriveninvestor.com/deploying-a-bitcoin-trading-bot-eb9998dfc0f5).
+You can watch YouTube videos about the project [here](https://www.youtube.com/watch?v=ee0JCfeFw1o&list=PLobCEGRAX3hZ0KqKoZ1RTlYZF-VguIhtC&index=4) 
 
-<a name="setup"></a>
-## Setup 
+<a name="strategies"></a>
+## Trading Strategies
 
-
-#### Pre-Requisites
-
-- [Python version 3.0.0 and above](https://www.python.org/downloads/).
-- Packages inside the requirements.txt file
-
-To install requirements file (inside project root): `pip install  -r requirements.txt`
-
-To upgrade to the latest backtesting package: `pip install  git+https://github.com/liamhartley/Gemini.git --upgrade`
-
-#### Terraform Deployment
-
-- Navigate to the root directory of the project
-- Run the "package_lambda.sh" script in <strategy>/terraform
-- Run Terraform init in the terraform directory to download the required modules
-- Run Terraform plan in the Terraform directory to ensure that your plan is working as expected
-- Run Terraform apply in the Terraform directory to deploy the cloud infrastructure
+- [Polniex Chande Momentum Oscillator (CMO) Trading strategy](https://github.com/liamhartley/cryptotradingbot/blob/master/poloniex_cmo_trading_strategy/)
 
 <a name="usage"></a>
 ## Usage 
-Run the main.py script.
 
-<a name="projectarchitecture"></a>
-## Project Architecture 
-TODO
+Please see each trading strategies README for specific usage instructions:
+
+- [Poloniex CMO Trading Strategy](https://github.com/liamhartley/cryptotradingbot/blob/master/poloniex_cmo_trading_strategy/README.md)
+
 
 <a name="futureimprovements"></a>
 ## Future Improvements
 
-Any 'TODO' tags in the project.
+Creation of more trading strategies.
 
-<a name="calculationimprovements"></a>
-#### Calculation Improvements
-- Optimise variables
+Please contribute any trading strategies back into this repository.
 
-<a name="platformimprovements"></a>
-#### Platform Improvements
-- Develop terraform infrastructure with AWS.
-- Save all data to S3
-- Develop unittests
-
-<a name="condequalityimprovements"></a>
-#### Code Quality Imrpovements
 
 <a name="howtocontribute"></a>
 ## How to Contribute 
 
-Branch off from the project to create a new feature and open a PR against master when complete. 
-Please feel free to reach out to me to check if a feature isn't already in development.
+Branch or fork off from the project to create a new feature and open a PR against master when complete.
+ 
+Please feel free to reach out to me to check if a feature isn't already in development or raise issues on GitHub.
+
 In the future I would love to see all sorts of strategies in this repo!
 
 <a name="projectarchitecture"></a>
@@ -85,11 +55,16 @@ In the future I would love to see all sorts of strategies in this repo!
 
 <a name="acknowledgements"></a>
 ## Acknowledgements 
+
 - [The Gemini crypto backtesting engine](https://github.com/anfederico/Gemini) by anfederico 
+
 
 <a name="donations"></a>
 ## Donations 
 
 If this project helped you learn Python or has helped you make some money then I would love any tips in Dogecoin!
 
-My wallet address is: DS7JRhMmL9RdXruqz5ubDaR3R8SNtoUi6i
+**My wallet address is**: DS7JRhMmL9RdXruqz5ubDaR3R8SNtoUi6i
+
+[Alternatively you can buy me a coffee!](https://www.buymeacoffee.com/liamhartley)
+
