@@ -38,3 +38,4 @@ zip -r $lambda_zip_filepath ./*glob*
 echo "deploying cloud infrastructure"
 cd $infrastructure_filepath || exit
 
+terraform apply
