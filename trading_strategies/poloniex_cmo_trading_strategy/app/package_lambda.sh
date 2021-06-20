@@ -3,7 +3,7 @@ echo $BASH_VERSION
 
 # run this script in the root directory (cryptotradingbot) to package all scripts and packages for the lambda deployment
 
-# TODO terraform init and plan
+# TODO aws_terraform init and plan
 
 # scripts required and payload directory destinations
 

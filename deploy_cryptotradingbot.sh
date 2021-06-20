@@ -1,23 +1,24 @@
 #!/usr/local/bin bash
 echo $BASH_VERSION
-# TODO finish the terraform deployment and redeploy the poloniex strategy
 
 # run this script in the root directory after defining the filepaths below to deploy your trading strategy
-lambda_zip_filepath="/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload.zip"
-payload_filepath="/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/"
-infrastructure_filepath="/Users/liam.hartley/PycharmProjects/cryptotradingbot/cloud_infrastructure/terraform/"
-export strategy_name="poloniex_cmo"
+lambda_zip_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload.zip"
+payload_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/"
+infrastructure_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/cloud_infrastructure/aws_terraform/"
 
+export TF_VAR_PROJECT_NAME="poloniex-cmo"
+export TF_VAR_PAYLOAD_FUNCTION_FILEPATH="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload.zip"
+export TF_VAR_TRADING_FREQUENCY="rate(1 hour)" # currently configured to be one frequency per strategy
 
-# TODO run this script in the root directory (cryptotradingbot) to package all scripts and packages for the lambda deployment
 
 # TODO automate these paths or move this config into each strategy
+# TODO make this its own function
 ########## required trading script paths ##########
 declare -A scripts=(
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/app.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/"
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/config.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/cmo_trading_strategy/"
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_wrapper_bwentzloff.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_tools/"
-                  ["/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_tools/cmo_calculation.py"]="/Users/liam.hartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_tools/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/app.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/config.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/cmo_trading_strategy/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_wrapper_bwentzloff.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_tools/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/cmo_calculation.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_tools/"
                   )
 
 # copy all scripts into the payload directory
@@ -31,10 +32,13 @@ done
 ### zipping ###
 echo "zipping"
 cd $payload_filepath || exit
-zip -r $lambda_zip_filepath ./*glob*
+zip -r $lambda_zip_filepath *
 
 # TODO
 ### deploying cloud infrastructure ###
 echo "deploying cloud infrastructure"
 cd $infrastructure_filepath || exit
 
+terraform init
+
+terraform apply -lock=false

@@ -1,6 +1,6 @@
-resource "aws_lambda_function" "cryptotradingbot_cmo" {
-  filename = "../app/payload.zip"
-  function_name = "cryptotradingbot_cmo"
+resource "aws_lambda_function" "cryptotradingbot" {
+  filename = var.PAYLOAD_FUNCTION_FILEPATH
+  function_name = "cryptotradingbot-${var.PROJECT_NAME}"
   handler = "app.lambda_handler"
   role = aws_iam_role.crypto_lambda_execution_role.arn
   runtime = "python3.7"
