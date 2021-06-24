@@ -1,6 +1,6 @@
 import time
 import requests
-from cmo_trading_strategy.config import LOGICAL_PARAMS
+from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS
 
 
 def get_past(pair, period, days_history=30):
@@ -32,10 +32,12 @@ def cmo_logic_no_pandas():
         days_history=LOGICAL_PARAMS["CMO_PERIOD"]
     )
 
+    print(f'historical data: {response_json}')
+
     if len(response_json)-1 == LOGICAL_PARAMS["CMO_PERIOD"]:
         past_data = response_json[1:]
     elif len(response_json) == LOGICAL_PARAMS["CMO_PERIOD"]:
-        pass
+        past_data = response_json
     else:
         raise Exception("Invalid CMO check")
 
@@ -49,7 +51,8 @@ def cmo_logic_no_pandas():
             lower_close_price += 1
 
     cmo = ((higher_close_price - lower_close_price) / (higher_close_price + lower_close_price)) * 100
-
+    print(f'higher_close_price: {higher_close_price}')
+    print(f'lower_close_price: {lower_close_price}')
     return cmo
 
 

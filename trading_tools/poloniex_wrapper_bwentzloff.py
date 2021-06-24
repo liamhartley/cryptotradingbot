@@ -32,7 +32,8 @@ class Poloniex:
         return after
 
     def api_query(self, command, req={}):
-
+        import ssl
+        gcontext = ssl.SSLContext()  # Only for gangstars
         if (command == "returnTicker" or command == "return24Volume"):
             ret = urllib.request.urlopen(urllib.request.Request('https://poloniex.com/public?command=' + command))
             return json.loads(ret.read())
@@ -43,7 +44,7 @@ class Poloniex:
         elif (command == "returnMarketTradeHistory"):
             ret = urllib.request.urlopen(urllib.request.Request(
                 'https://poloniex.com/public?command=' + "returnTradeHistory" + '&currencyPair=' + str(
-                    req['currencyPair'])))
+                    req['currencyPair'])), context=gcontext)
             return json.loads(ret.read())
         elif (command == "returnChartData"):
             ret = urllib.request.urlopen(urllib.request.Request(

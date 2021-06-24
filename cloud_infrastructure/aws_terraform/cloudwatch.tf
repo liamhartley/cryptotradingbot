@@ -2,7 +2,7 @@ resource "aws_cloudwatch_event_rule" "cryptotradingbot" {
   name = var.PROJECT_NAME
   description = "sends a trigger to execute trading logic"
   schedule_expression = var.TRADING_FREQUENCY
-  is_enabled = false
+  is_enabled = true
 }
 
 resource "aws_cloudwatch_event_target" "trigger_cmo_strategy" {
