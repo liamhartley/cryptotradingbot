@@ -1,8 +1,6 @@
 import os
-import boto3
 
-from datetime import datetime
-from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS, INFRASTRUCTURE_PARAMS
+from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS
 from trading_tools.poloniex_wrapper_bwentzloff import Poloniex
 from trading_tools.cmo_calculation import cmo_logic_no_pandas
 

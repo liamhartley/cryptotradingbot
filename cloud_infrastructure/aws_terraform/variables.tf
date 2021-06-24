@@ -27,10 +27,12 @@ variable "region" {
 # strategy variables - OPTIONAL
 
 # poloniex strategies
-variable "POLONIEX_API_KEY" {
+variable "POLONIEX_KEY" {
   type = string
+  default = ''
 }
 
-variable "POLONIEX_SECRET_KEY" {
+variable "POLONIEX_SECRET" {
   type = string
+  default = ''
 }

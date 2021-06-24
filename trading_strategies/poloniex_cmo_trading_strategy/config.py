@@ -10,6 +10,5 @@ LOGICAL_PARAMS = {
 }
 
 INFRASTRUCTURE_PARAMS = {
-    "S3_BUCKET_NAME": "cryptotradingbot-liamhartley",
     "AWS_REGION": "eu-west-1"
 }
