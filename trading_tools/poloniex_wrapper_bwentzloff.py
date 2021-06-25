@@ -56,7 +56,7 @@ class Poloniex:
             req['command'] = command
             req['nonce'] = int(time.time() * 1000)
             post_data = urllib.parse.urlencode(req)
-
+            # TODO fix this
             sign = hmac.new(self.Secret, post_data, hashlib.sha512).hexdigest()
             headers = {
                 'Sign': sign,

@@ -6,9 +6,9 @@ lambda_zip_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading
 payload_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/"
 infrastructure_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/cloud_infrastructure/aws_terraform/"
 
-export TF_VAR_PROJECT_NAME="poloniex-cmo"
-export TF_VAR_PAYLOAD_FUNCTION_FILEPATH="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload.zip"
-export TF_VAR_TRADING_FREQUENCY="rate(1 hour)" # currently configured to be one frequency per strategy
+export PROJECT_NAME="poloniex-cmo"
+export PAYLOAD_FUNCTION_FILEPATH="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload.zip"
+export TRADING_FREQUENCY="rate(1 hour)" # currently configured to be one frequency per strategy
 
 
 # TODO automate these paths or move this config into each strategy
@@ -17,7 +17,7 @@ export TF_VAR_TRADING_FREQUENCY="rate(1 hour)" # currently configured to be one 
 declare -A scripts=(
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/app.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/config.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_strategies/poloniex_cmo_trading_strategy/"
-                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_wrapper_bwentzloff.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_tools/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_wrapper.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_tools/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/cmo_calculation.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/trading_tools/"
                   )
 

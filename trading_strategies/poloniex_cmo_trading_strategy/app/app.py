@@ -1,24 +1,31 @@
 import os
 
 from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS
-from trading_tools.poloniex_wrapper_bwentzloff import Poloniex
+from trading_tools.poloniex_wrapper import Poloniex
 from trading_tools.cmo_calculation import cmo_logic_no_pandas
 
 
-def close_positions(poloniex_wrapper, base_currency, quote_currency):
+def close_positions(poloniex_wrapper, pair, rate, amount):
 
-    ticker = poloniex_wrapper.returnTicker()[quote_currency+'_'+base_currency]
-    print(f'ticker: {ticker}')
-    # if we have any of our base currency
-    if poloniex_wrapper.returnBalances()[base_currency] > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
+    print('closing position')
+    print(f'entry_amount: {amount}')
+    print(f'rate: {rate}')
+    print(f'ticker: {pair}')
+
+    # base_currency = LOGICAL_PARAMS['PAIR'].split('_')[0]
+    quote_currency = LOGICAL_PARAMS['PAIR'].split('_')[1]
+
+    # if we have any of our quote_currency
+    if poloniex_wrapper.private_query(command='returnBalances')[quote_currency] > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
         # sell the entire balance of our base currency
-        response = poloniex_wrapper.sell(
-            currencyPair=LOGICAL_PARAMS['PAIR'],
-            rate=ticker['highestBid'],
-            amount=poloniex_wrapper.returnBalances()[base_currency]
+        response = poloniex_wrapper.trade(
+            currency_pair=pair,
+            rate=rate,
+            amount=amount,
+            command='sell'
         )
     elif LOGICAL_PARAMS["DRY_RUN"] is True:
-        print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {ticker['highestBid']}")
+        print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {pair['highestBid']}")
         response = {'orderNumber': '514845991795',
                     'resultingTrades': [
                         {'amount': '3.0',
@@ -34,24 +41,25 @@ def close_positions(poloniex_wrapper, base_currency, quote_currency):
     else:
         response = None
 
-    print(f"{base_currency} balance: {poloniex_wrapper.returnBalances()[base_currency]}")
     return response
 
 
-def enter_position(poloniex_wrapper, base_currency, quote_currency):
-    all_tickers = poloniex_wrapper.returnTicker()
-    ticker = all_tickers[base_currency+'_'+quote_currency]
-    entry_amount = float(ticker['lowestAsk'])/(LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE'])
-    print(f'entry_amount: {entry_amount}')
-    print(f'ticker: {ticker}')
+def enter_position(poloniex_wrapper, pair, rate, amount):
+
+    print('entering position')
+    print(f'entry_amount: {amount}')
+    print(f'rate: {rate}')
+    print(f'ticker: {pair}')
+
     if LOGICAL_PARAMS["DRY_RUN"] is False:
-        response = poloniex_wrapper.buy(
-            currencyPair=LOGICAL_PARAMS['PAIR'],
-            rate=ticker['lowestAsk'],
-            amount=entry_amount
+        response = poloniex_wrapper.trade(
+            currency_pair=pair,
+            rate=rate,
+            amount=amount,
+            command='buy'
         )
     else:
-        print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {entry_amount}\npurchase price: {ticker['lowestAsk']} ")
+        print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {amount}\npurchase price: {pair['lowestAsk']} ")
         response = {'orderNumber': '514845991795',
                     'resultingTrades': [
                         {'amount': '3.0',
@@ -81,16 +89,30 @@ def lambda_handler(event, context):
 
     cmo = cmo_logic_no_pandas()
 
-    response = enter_position(poloniex_wrapper, base_currency, quote_currency)
+    all_tickers = poloniex_wrapper.public_query(command='returnTicker')
+    ticker = all_tickers[LOGICAL_PARAMS['PAIR']]
+    rate = float(ticker['lowestAsk'])
+    price = LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE']  # of base currency
+    entry_amount = price/rate
 
-    # # asset oversold
-    # if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
-    #     response = enter_position(poloniex_wrapper, base_currency, quote_currency)
-    # # asset overbought
-    # elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
-    #     response = close_positions(poloniex_wrapper, base_currency)
-    # else:
-    #     response = 'no trades'
+    # asset oversold
+    if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
+        response = enter_position(
+            poloniex_wrapper,
+            pair=ticker,
+            rate=rate,
+            amount=entry_amount
+        )
+    # asset overbought
+    elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
+        response = close_positions(
+            poloniex_wrapper,
+            base_currency)
+    else:
+        response = 'no trades'
+
+    print(f"{base_currency} balance: {poloniex_wrapper.private_query()[base_currency]}")
+    print(f"{quote_currency} balance: {poloniex_wrapper.private_query()[quote_currency]}")
 
     print(f'CMO: {cmo}')
     print(f'response: {response}')

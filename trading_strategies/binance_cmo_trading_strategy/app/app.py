@@ -12,12 +12,12 @@ def close_positions(poloniex_wrapper, base_currency, quote_currency):
     ticker = poloniex_wrapper.returnTicker()[quote_currency+'_'+base_currency]
 
     # if we have any of our base currency
-    if poloniex_wrapper.returnBalances()[base_currency] > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
+    if poloniex_wrapper.private_query()[base_currency] > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
         # sell the entire balance of our base currency
         response = poloniex_wrapper.sell(
             currencyPair=LOGICAL_PARAMS['PAIR'],
             rate=ticker['highestBid'],
-            amount=poloniex_wrapper.returnBalances()[base_currency]
+            amount=poloniex_wrapper.private_query()[base_currency]
         )
     elif LOGICAL_PARAMS["DRY_RUN"] is True:
         print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {ticker['highestBid']}")
@@ -36,7 +36,7 @@ def close_positions(poloniex_wrapper, base_currency, quote_currency):
     else:
         response = None
 
-    print(f"{base_currency} balance: {poloniex_wrapper.returnBalances()[base_currency]}")
+    print(f"{base_currency} balance: {poloniex_wrapper.private_query()[base_currency]}")
     return response
 
 
@@ -44,8 +44,8 @@ def enter_position(poloniex_wrapper, base_currency, quote_currency):
     ticker = poloniex_wrapper.returnTicker()[quote_currency+'_'+base_currency]
     entry_amount = ticker['lowestAsk']/(LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE'])
     if LOGICAL_PARAMS["DRY_RUN"] is False:
-        response = poloniex_wrapper.buy(
-            currencyPair=LOGICAL_PARAMS['PAIR'],
+        response = poloniex_wrapper.trade(
+            currency_pair=LOGICAL_PARAMS['PAIR'],
             rate=ticker['lowestAsk'],
             amount=entry_amount
         )
