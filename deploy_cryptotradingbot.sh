@@ -6,10 +6,10 @@ lambda_zip_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading
 payload_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload/"
 infrastructure_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/cloud_infrastructure/aws_terraform/"
 
-export PROJECT_NAME="poloniex-cmo"
-export PAYLOAD_FUNCTION_FILEPATH="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/app/payload.zip"
-export TRADING_FREQUENCY="rate(1 hour)" # currently configured to be one frequency per strategy
-
+# TODO document how to set these properly
+#export PROJECT_NAME="poloniex-cmo"
+#export TRADING_FREQUENCY="rate(1 hour)" # currently configured to be one frequency per strategy
+#export PAYLOAD_FUNCTION_FILEPATH=lambda_zip_filepath
 
 # TODO automate these paths or move this config into each strategy
 # TODO make this its own function
@@ -34,7 +34,6 @@ echo "zipping"
 cd $payload_filepath || exit
 zip -r $lambda_zip_filepath *
 
-# TODO
 ### deploying cloud infrastructure ###
 echo "deploying cloud infrastructure"
 cd $infrastructure_filepath || exit

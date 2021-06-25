@@ -111,8 +111,8 @@ def lambda_handler(event, context):
     else:
         response = 'no trades'
 
-    print(f"{base_currency} balance: {poloniex_wrapper.private_query()[base_currency]}")
-    print(f"{quote_currency} balance: {poloniex_wrapper.private_query()[quote_currency]}")
+    print(f"{base_currency} balance: {poloniex_wrapper.private_query(command='returnBalances')[base_currency]}")
+    print(f"{quote_currency} balance: {poloniex_wrapper.private_query(command='returnBalances')[quote_currency]}")
 
     print(f'CMO: {cmo}')
     print(f'response: {response}')

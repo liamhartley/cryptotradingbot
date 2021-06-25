@@ -29,10 +29,10 @@ variable "region" {
 # poloniex strategies
 variable "POLONIEX_KEY" {
   type = string
-  default = ''
+  default = ""
 }
 
 variable "POLONIEX_SECRET" {
   type = string
-  default = ''
+  default = ""
 }
