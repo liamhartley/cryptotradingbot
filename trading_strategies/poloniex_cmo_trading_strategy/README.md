@@ -27,18 +27,17 @@ The opposite is also true, overbought assets (CMO > overbought threshold) will c
 <a name="projectarchitecture"></a>
 ## Project Architecture 
 
-<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/poloniex_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">
+<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/trading_strategies/poloniex_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">
 
----
 #### Architecture Overview
 
-- Terraform deploys all of the infrastructure into AWS
+- Terraform deploys all the infrastructure into AWS
 - Cloudwatch is the trigger which kicks off the Lambda function
 - The Lambda function contains the trading logic which is written in Python
 - This logic uses the Poloniex API to connect to the exchange
-- Every decision that the Lambda takes is logged into an S3 bucket for auditing
+- Every decision that the Lambda takes is logged into to Cloudwatch for auditing
 
----
+
 
 <a name="setup"></a>
 ## Setup 

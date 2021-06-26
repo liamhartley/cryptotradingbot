@@ -25,9 +25,12 @@ The trading strategy uses XXX
 <a name="projectarchitecture"></a>
 ## Project Architecture 
 
-[comment]: <> (<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/poloniex_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">)
+
+[comment]: <> (example of how to reference an image in the repository <img src="https://github.com/liamhartley/cryptotradingbot/blob/master/poloniex_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">)
 
 ---
+
+I reccomend using draw.io for your architecture diagrams.
 
 #### Architecture Overview
 - X 

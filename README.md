@@ -2,6 +2,7 @@
 
 ## Contents
 0. [Introduction](#introduction)
+1. [Template Architecture](#architecture)
 1. [Trading Strategies](#strategies)
 1. [Usage](#usage)
 2. [Future Improvements](#futureimprovements)
@@ -17,6 +18,25 @@ A project to automatically run technical analysis strategies on AWS to trade cry
 This project aims to have multiple trading strategies that can all be deployed into AWS using Terraform.
 
 You can watch YouTube videos about the project [here](https://www.youtube.com/watch?v=ee0JCfeFw1o&list=PLobCEGRAX3hZ0KqKoZ1RTlYZF-VguIhtC&index=4) 
+
+<a name="architecture"></a>
+## Project Architecture
+
+#### Repository Structure
+
+- cloud_infrastructure: this folder contains all the infrastructure as code in order to deploy trading strategies.
+- trading_strategies: each folder within trading_strategies contains all the code required to backtest, optimise and develop your trading logic. The "app" logic is what gets deployed in the generic setup.
+- trading_tools: generic pieces of code that can be used across multiple trading strategies.
+
+#### Generic Trading Architecture Overview (may differ between trading strategies)
+
+- The cloud infrastructure is deployed and managed using infrastructure as code. In this example terraform deploys all the infrastructure into AWS.
+- Cloudwatch (AWS) is the trigger which kicks off the Lambda Function (AWS) at a pre-defined frequency.
+- The Lambda function contains the trading strategy to execute trades.
+- Every decision that the Lambda takes is logged into to Cloudwatch for auditing.
+
+<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/project_architecture.png" width="500px">
+
 
 <a name="strategies"></a>
 ## Trading Strategies
@@ -42,8 +62,9 @@ Please contribute any trading strategies back into this repository.
 <a name="howtocontribute"></a>
 ## How to Contribute 
 
+
 Branch or fork off from the project to create a new feature and open a PR against master when complete.
- 
+
 Please feel free to reach out to me to check if a feature isn't already in development or raise issues on GitHub.
 
 In the future I would love to see all sorts of strategies in this repo!
