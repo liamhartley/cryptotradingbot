@@ -34,21 +34,25 @@ def cmo_logic_no_pandas():
 
     print(f'historical data: {response_json}')
 
-    if len(response_json)-1 == LOGICAL_PARAMS["CMO_PERIOD"]:
-        past_data = response_json[1:]
-    elif len(response_json) == LOGICAL_PARAMS["CMO_PERIOD"]:
-        past_data = response_json
-    else:
-        raise Exception("Invalid CMO check")
+    # if len(response_json)-1 == LOGICAL_PARAMS["CMO_PERIOD"]:
+    #     past_data = response_json[1:]
+    # elif len(response_json) == LOGICAL_PARAMS["CMO_PERIOD"]:
+    #     past_data = response_json
+    # else:
+    #     raise Exception("Invalid CMO check")
 
     higher_close_price = 0
     lower_close_price = 0
 
-    for day in past_data:
-        if day['close'] > day['open']:
-            higher_close_price += 1
-        elif day['close'] < day['open']:
-            lower_close_price += 1
+    previous_day = False
+
+    for day in response_json:
+        if previous_day is not False:
+            if day['close'] > previous_day['close']:
+                higher_close_price += 1
+            elif day['close'] < previous_day['close']:
+                lower_close_price += 1
+        previous_day = day
 
     cmo = ((higher_close_price - lower_close_price) / (higher_close_price + lower_close_price)) * 100
     print(f'higher_close_price: {higher_close_price}')

@@ -88,12 +88,12 @@ if __name__ == '__main__':
     #     command='buy'
     # )
 
-    response = poloniex_wrapper.trade(
-        currency_pair=LOGICAL_PARAMS['PAIR'],
-        rate=rate,
-        amount=entry_amount,
-        command='sell'
-    )
+    # response = poloniex_wrapper.trade(
+    #     currency_pair=LOGICAL_PARAMS['PAIR'],
+    #     rate=rate,
+    #     amount=entry_amount,
+    #     command='sell'
+    # )
 
     balance = poloniex_wrapper.private_query(command='returnBalances')
 

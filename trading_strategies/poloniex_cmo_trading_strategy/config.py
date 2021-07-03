@@ -6,7 +6,7 @@ LOGICAL_PARAMS = {
     "OVERBOUGHT_VALUE": 50,
     "DRY_RUN": False,
     "INITIAL_CAPITAL": 0.018,  # in quote currency
-    "ENTRY_SIZE": 0.01  # 10%
+    "ENTRY_SIZE": 0.1  # 10%
 }
 
 INFRASTRUCTURE_PARAMS = {
