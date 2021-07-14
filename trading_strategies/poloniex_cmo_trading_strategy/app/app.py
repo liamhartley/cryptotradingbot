@@ -99,7 +99,7 @@ def lambda_handler(event, context):
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
         response = enter_position(
             poloniex_wrapper,
-            pair=ticker,
+            pair=LOGICAL_PARAMS['PAIR'],
             rate=rate,
             amount=entry_amount
         )
