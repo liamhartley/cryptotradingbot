@@ -16,8 +16,6 @@ A project to automatically run technical analysis strategies on AWS to trade cry
 
 This project aims to have multiple trading strategies that can all be deployed into AWS using Terraform.
 
-You can watch YouTube videos about the project [here](https://www.youtube.com/watch?v=ee0JCfeFw1o&list=PLobCEGRAX3hZ0KqKoZ1RTlYZF-VguIhtC&index=4) 
-
 <a name="strategies"></a>
 ## Trading Strategies
 
