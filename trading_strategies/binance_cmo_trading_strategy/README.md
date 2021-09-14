@@ -1,4 +1,4 @@
-# Poloniex CMO Trading Strategy
+# Binance Trading Strategy (IN DEV)
 
 ## Contents
 0. [Overview](#overview)
@@ -18,24 +18,22 @@ This solution allows you to run the strategy 24/7 on AWS.
 You can watch the entire development of this project on [this YouTube playlist](https://www.youtube.com/watch?v=ee0JCfeFw1o&list=PLobCEGRAX3hZ0KqKoZ1RTlYZF-VguIhtC&index=4).
 You can see this project being deployed in [this video](https://www.youtube.com/watch?v=ee0JCfeFw1o&list=PLobCEGRAX3hZ0KqKoZ1RTlYZF-VguIhtC&index=3). 
 
-The trading strategy uses CMO to analyse when there is potentially too much trading momentum in one direction.
+The trading strategy uses XXX
 
-If the asset is considered to be oversold (CMO < oversold threshold) then the bot will purchase the amount defined in the config file.
 
-The opposite is also true, overbought assets (CMO > overbought threshold) will cause the bot to sell an amount defined in the config. 
 
 <a name="projectarchitecture"></a>
 ## Project Architecture 
 
-<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/poloniex_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">
+[comment]: <> (<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/poloniex_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">)
 
 ---
 
-- Terraform deploys all of the infrastructure into AWS
-- Cloudwatch is the trigger which kicks off the Lambda function
-- The Lambda function contains the trading logic which is written in Python
-- This logic uses the Poloniex API to connect to the exchange
-- Every decision that the Lambda takes is logged into an S3 bucket for auditing
+#### Architecture Overview
+- X 
+- Y
+- X
+
 
 ---
 
@@ -57,7 +55,7 @@ To upgrade to the latest backtesting package: `pip install  git+https://github.c
 
 <a name="usage"></a>
 ## Usage 
-
+# TODO continue proof read here
 #### Terraform AWS Deployment
 
 All of the AWS resources are managed by Terraform and it is best practice to make changes to the code and re-deploy instead of making changes in the GUI.
@@ -88,18 +86,17 @@ Then run any SQL query you like against this dataframe to identify the most suit
 
 Branch off from the project to create a new feature and open a PR against master when complete. 
 
-Please feel free to reach out to me to check if a feature isn't already in development.
-
 <a name="projectarchitecture"></a>
 ## Further Reading
-- Read more about the project [my blog](https://medium.datadriveninvestor.com/deploying-a-bitcoin-trading-bot-eb9998dfc0f5)
-- [CMO by Investopedia](https://www.investopedia.com/terms/c/chandemomentumoscillator.asp)
-- [Poloniex Exchange](https://poloniex.com)
+- X
+- Y
+- Z
 
 <a name="acknowledgements"></a>
 ## Acknowledgements 
-- [The Gemini crypto backtesting engine](https://github.com/anfederico/Gemini) by anfederico 
-- [The Poloniex wrapper](https://github.com/bwentzloff/trading-bot) by bwentzloff
+- X
+- Y
+- Z
 
 <a name="donations"></a>
 ## Donations 
