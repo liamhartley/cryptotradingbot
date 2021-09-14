@@ -37,7 +37,6 @@ You can watch YouTube videos about the project [here](https://www.youtube.com/wa
 
 <img src="https://github.com/liamhartley/cryptotradingbot/blob/master/project_architecture.png" width="500px">
 
-
 <a name="strategies"></a>
 ## Trading Strategies
 
