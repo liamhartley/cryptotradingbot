@@ -1,26 +1,31 @@
 import os
-import boto3
 
-from datetime import datetime
-from cmo_trading_strategy.config import LOGICAL_PARAMS, INFRASTRUCTURE_PARAMS
-from trading_tools.poloniex_wrapper_bwentzloff import Poloniex
+from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS
+from trading_tools.poloniex_wrapper import Poloniex
 from trading_tools.cmo_calculation import cmo_logic_no_pandas
 
 
-def close_positions(poloniex_wrapper, base_currency, quote_currency):
+def close_positions(poloniex_wrapper, pair, rate, amount):
 
-    ticker = poloniex_wrapper.returnTicker()[quote_currency+'_'+base_currency]
+    print('closing position')
+    print(f'entry_amount: {amount}')
+    print(f'rate: {rate}')
+    print(f'ticker: {pair}')
 
-    # if we have any of our base currency
-    if poloniex_wrapper.private_query()[base_currency] > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
+    # base_currency = LOGICAL_PARAMS['PAIR'].split('_')[0]
+    quote_currency = LOGICAL_PARAMS['PAIR'].split('_')[1]
+
+    # if we have any of our quote_currency
+    if poloniex_wrapper.private_query(command='returnBalances')[quote_currency] > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
         # sell the entire balance of our base currency
-        response = poloniex_wrapper.sell(
-            currencyPair=LOGICAL_PARAMS['PAIR'],
-            rate=ticker['highestBid'],
-            amount=poloniex_wrapper.private_query()[base_currency]
+        response = poloniex_wrapper.trade(
+            currency_pair=pair,
+            rate=rate,
+            amount=amount,
+            command='sell'
         )
     elif LOGICAL_PARAMS["DRY_RUN"] is True:
-        print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {ticker['highestBid']}")
+        print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {pair['highestBid']}")
         response = {'orderNumber': '514845991795',
                     'resultingTrades': [
                         {'amount': '3.0',
@@ -36,21 +41,25 @@ def close_positions(poloniex_wrapper, base_currency, quote_currency):
     else:
         response = None
 
-    print(f"{base_currency} balance: {poloniex_wrapper.private_query()[base_currency]}")
     return response
 
 
-def enter_position(poloniex_wrapper, base_currency, quote_currency):
-    ticker = poloniex_wrapper.returnTicker()[quote_currency+'_'+base_currency]
-    entry_amount = ticker['lowestAsk']/(LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE'])
+def enter_position(poloniex_wrapper, pair, rate, amount):
+
+    print('entering position')
+    print(f'entry_amount: {amount}')
+    print(f'rate: {rate}')
+    print(f'ticker: {pair}')
+
     if LOGICAL_PARAMS["DRY_RUN"] is False:
         response = poloniex_wrapper.trade(
-            currency_pair=LOGICAL_PARAMS['PAIR'],
-            rate=ticker['lowestAsk'],
-            amount=entry_amount
+            currency_pair=pair,
+            rate=rate,
+            amount=amount,
+            command='buy'
         )
     else:
-        print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {entry_amount}\npurchase price: {ticker['lowestAsk']} ")
+        print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {amount}\npurchase price: {pair['lowestAsk']} ")
         response = {'orderNumber': '514845991795',
                     'resultingTrades': [
                         {'amount': '3.0',
@@ -67,29 +76,11 @@ def enter_position(poloniex_wrapper, base_currency, quote_currency):
     return response
 
 
-def s3_logger(message):
-    if message is not None:
-        s3 = boto3.resource(
-            's3',
-            region_name=INFRASTRUCTURE_PARAMS['AWS_REGION'],
-            aws_access_key_id=os.getenv('AWS_KEY'),
-            aws_secret_access_key=os.getenv('AWS_SECRET')
-        )
-        object = s3.Object(
-            INFRASTRUCTURE_PARAMS['S3_BUCKET_NAME'],
-            f'{datetime.strftime(datetime.now(),"%m%d%y_%H%M")}_cmo_trading_strategy_audit.txt'
-        )
-        response = object.put(Body=message)
-    else:
-        response = 'no trades'
-    return response
-
-
 def lambda_handler(event, context):
 
     poloniex_wrapper = Poloniex(
-        APIKey=os.getenv('POLONIEX_API_KEY'),
-        Secret=os.getenv('POLONIEX_SECRET_KEY')
+        APIKey=os.getenv('POLONIEX_KEY'),
+        Secret=os.getenv('POLONIEX_SECRET')
     )
 
     base_currency = LOGICAL_PARAMS['PAIR'].split('_')[0]
@@ -98,18 +89,33 @@ def lambda_handler(event, context):
 
     cmo = cmo_logic_no_pandas()
 
+    all_tickers = poloniex_wrapper.public_query(command='returnTicker')
+    ticker = all_tickers[LOGICAL_PARAMS['PAIR']]
+    rate = float(ticker['lowestAsk'])
+    price = LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE']  # of base currency
+    entry_amount = price/rate
+
     # asset oversold
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
-        response = enter_position(poloniex_wrapper, base_currency, quote_currency)
+        response = enter_position(
+            poloniex_wrapper,
+            pair=LOGICAL_PARAMS['PAIR'],
+            rate=rate,
+            amount=entry_amount
+        )
     # asset overbought
     elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
-        response = close_positions(poloniex_wrapper, base_currency)
+        response = close_positions(
+            poloniex_wrapper,
+            base_currency)
     else:
-        response = None
+        response = 'no trades'
 
-    s3_response = s3_logger(message=response)
+    print(f"{base_currency} balance: {poloniex_wrapper.private_query(command='returnBalances')[base_currency]}")
+    print(f"{quote_currency} balance: {poloniex_wrapper.private_query(command='returnBalances')[quote_currency]}")
+
     print(f'CMO: {cmo}')
-    print(f's3_response: {s3_response}')
+    print(f'response: {response}')
     for key in LOGICAL_PARAMS:
         print(f'{key}: {LOGICAL_PARAMS[key]}')
 
