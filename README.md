@@ -37,6 +37,7 @@ You can watch YouTube videos about the project [here](https://www.youtube.com/wa
 
 <img src="https://github.com/liamhartley/cryptotradingbot/blob/master/project_architecture.png" width="500px">
 
+
 <a name="strategies"></a>
 ## Trading Strategies
 
@@ -82,9 +83,12 @@ In the future I would love to see all sorts of strategies in this repo!
 <a name="donations"></a>
 ## Donations 
 
-If this project helped you learn Python or has helped you make some money then I would love any tips in Dogecoin!
+If this project helped you learn Python or has helped you make some money then I would love any tips in crypto!
 
-**My wallet address is**: DS7JRhMmL9RdXruqz5ubDaR3R8SNtoUi6i
+- **BTC**: 36icgLxqAfFTuuruU7v1GQmFpUHjKnzJa8
+- **ETH**: 0xd084F627630Cb8C24895fAc531447256BD17b05e
+- **USDC**: 0xd084F627630Cb8C24895fAc531447256BD17b05e
+- **DOGE**: DS7JRhMmL9RdXruqz5ubDaR3R8SNtoUi6i
 
 [Alternatively you can buy me a coffee!](https://www.buymeacoffee.com/liamhartley)
 
