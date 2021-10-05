@@ -104,9 +104,9 @@ Please feel free to reach out to me to check if a feature isn't already in devel
 <a name="donations"></a>
 ## Donations 
 
-If this project helped you learn Python or has helped you make some money then I would love any tips in Dogecoin!
+If this project helped you learn Python or has helped you make some money then I would love any tips in Bitcoin!
 
-**My wallet address is**: DS7JRhMmL9RdXruqz5ubDaR3R8SNtoUi6i
+**My wallet address is**: 36icgLxqAfFTuuruU7v1GQmFpUHjKnzJa8
 
 [Alternatively you can buy me a coffee!](https://www.buymeacoffee.com/liamhartley)
 

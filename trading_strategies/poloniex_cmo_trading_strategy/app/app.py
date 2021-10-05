@@ -6,7 +6,13 @@ from trading_tools.cmo_calculation import cmo_logic_no_pandas
 
 
 def close_positions(poloniex_wrapper, pair, rate, amount):
+    '''
 
+    :param currency_pair: A string that defines the market, "USDT_BTC" for example.
+    :param rate: The price. Units are market quote currency. Eg USDT_BTC market, the value of this field would be around 10,000. Naturally this will be dated quickly but should give the idea.
+    :param amount: The total amount offered in this buy order.
+    :return:
+    '''
     print('closing position')
     print(f'entry_amount: {amount}')
     print(f'rate: {rate}')
@@ -16,7 +22,7 @@ def close_positions(poloniex_wrapper, pair, rate, amount):
     quote_currency = LOGICAL_PARAMS['PAIR'].split('_')[1]
 
     # if we have any of our quote_currency
-    if poloniex_wrapper.private_query(command='returnBalances')[quote_currency] > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
+    if float(poloniex_wrapper.private_query(command='returnBalances')[quote_currency]) > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
         # sell the entire balance of our base currency
         response = poloniex_wrapper.trade(
             currency_pair=pair,
@@ -45,7 +51,13 @@ def close_positions(poloniex_wrapper, pair, rate, amount):
 
 
 def enter_position(poloniex_wrapper, pair, rate, amount):
+    '''
 
+    :param currency_pair: A string that defines the market, "USDT_BTC" for example.
+    :param rate: The price. Units are market quote currency. Eg USDT_BTC market, the value of this field would be around 10,000. Naturally this will be dated quickly but should give the idea.
+    :param amount: The total amount offered in this buy order.
+    :return:
+    '''
     print('entering position')
     print(f'entry_amount: {amount}')
     print(f'rate: {rate}')
@@ -107,7 +119,10 @@ def lambda_handler(event, context):
     elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
         response = close_positions(
             poloniex_wrapper,
-            base_currency)
+            pair=LOGICAL_PARAMS['PAIR'],
+            rate=rate,
+            amount=entry_amount
+        )
     else:
         response = 'no trades'
 
