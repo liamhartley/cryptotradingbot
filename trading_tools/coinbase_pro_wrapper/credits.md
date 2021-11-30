@@ -1,0 +1,1 @@
+All code leveraged from this amazing repository https://github.com/danpaquin/coinbasepro-python
