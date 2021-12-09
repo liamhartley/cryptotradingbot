@@ -11,8 +11,8 @@ import requests
 import base64
 import json
 from requests.auth import AuthBase
-from public_client import PublicClient
-from cbpro_auth import CBProAuth
+from trading_tools.coinbase_pro_wrapper.public_client import PublicClient
+from trading_tools.coinbase_pro_wrapper.cbpro_auth import CBProAuth
 
 
 class AuthenticatedClient(PublicClient):

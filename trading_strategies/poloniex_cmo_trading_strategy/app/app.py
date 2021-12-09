@@ -2,7 +2,7 @@ import os
 
 from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS
 from trading_tools.poloniex_wrapper import Poloniex
-from trading_tools.cmo_calculation import cmo_logic_no_pandas
+from trading_tools.poloniex_cmo_calculation import poloniex_cmo_logic_no_pandas
 
 
 def close_positions(poloniex_wrapper, pair, rate, amount):
@@ -99,7 +99,7 @@ def lambda_handler(event, context):
     quote_currency = LOGICAL_PARAMS['PAIR'].split('_')[1]
     assert base_currency+'_'+quote_currency == LOGICAL_PARAMS['PAIR']
 
-    cmo = cmo_logic_no_pandas()
+    cmo = poloniex_cmo_logic_no_pandas(pair=LOGICAL_PARAMS['PAIR'])
 
     all_tickers = poloniex_wrapper.public_query(command='returnTicker')
     ticker = all_tickers[LOGICAL_PARAMS['PAIR']]

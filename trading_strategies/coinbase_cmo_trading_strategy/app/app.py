@@ -1,12 +1,30 @@
 import os
 
 from trading_strategies.coinbase_cmo_trading_strategy.config import LOGICAL_PARAMS
-from trading_tools.cmo_calculation import cmo_logic_no_pandas
+from trading_tools.coinbase_cmo_calculation import coinbase_cmo_logic_no_pandas
 from trading_tools.coinbase_pro_wrapper.authenticated_client import AuthenticatedClient
 from trading_tools.coinbase_pro_wrapper.public_client import PublicClient
 
 
-def close_positions(poloniex_wrapper, pair, rate, amount):
+def get_balance(coinbase_wrapper, ticker: str):
+    '''
+    Function to parse the get_accounts output to find the balance for a given ticker
+    :param ticker: the ticker for the cryptocurrency that you want the balnace for e.g. BTC
+    :return:
+    '''
+
+    all_accounts = coinbase_wrapper.get_accounts()
+
+    response = None
+    for account in all_accounts:
+        if account['currency'] == ticker:
+            response = account
+
+    assert response is not None
+    return response
+
+
+def close_positions(coinbase_wrapper, pair, rate, amount):
     '''
 
     :param currency_pair: A string that defines the market, "USDT_BTC" for example.
@@ -19,17 +37,17 @@ def close_positions(poloniex_wrapper, pair, rate, amount):
     print(f'rate: {rate}')
     print(f'ticker: {pair}')
 
-    # base_currency = LOGICAL_PARAMS['PAIR'].split('_')[0]
-    quote_currency = LOGICAL_PARAMS['PAIR'].split('_')[1]
+    # base_currency = LOGICAL_PARAMS['PAIR'].split('-')[0]
+    quote_currency = LOGICAL_PARAMS['PAIR'].split('-')[1]
 
-    # if we have any of our quote_currency
-    if float(poloniex_wrapper.private_query(command='returnBalances')[quote_currency]) > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
+    # if we have any of our quote_currency #TODO check the output for the .get_accounts() below
+    if float(get_balance(coinbase_wrapper, ticker=quote_currency)['balance']) > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
         # sell the entire balance of our base currency
-        response = poloniex_wrapper.trade(
-            currency_pair=pair,
-            rate=rate,
-            amount=amount,
-            command='sell'
+        response = coinbase_wrapper.sell(
+            price=rate,
+            size=amount,
+            order_type='market',
+            product_id=pair
         )
     elif LOGICAL_PARAMS["DRY_RUN"] is True:
         print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {pair['highestBid']}")
@@ -51,7 +69,7 @@ def close_positions(poloniex_wrapper, pair, rate, amount):
     return response
 
 
-def enter_position(poloniex_wrapper, pair, rate, amount):
+def enter_position(coinbase_wrapper, pair, rate, amount):
     '''
 
     :param currency_pair: A string that defines the market, "USDT_BTC" for example.
@@ -65,12 +83,10 @@ def enter_position(poloniex_wrapper, pair, rate, amount):
     print(f'ticker: {pair}')
 
     if LOGICAL_PARAMS["DRY_RUN"] is False:
-        response = poloniex_wrapper.trade(
-            currency_pair=pair,
-            rate=rate,
-            amount=amount,
-            command='buy'
-        )
+        response = coinbase_wrapper.buy(price=rate,
+                                        size=amount,
+                                        order_type='market',
+                                        product_id=pair)
     else:
         print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {amount}\npurchase price: {pair['lowestAsk']} ")
         response = {'orderNumber': '514845991795',
@@ -102,18 +118,17 @@ def lambda_handler(event, context):
     quote_currency = LOGICAL_PARAMS['PAIR'].split('-')[1]
     assert base_currency+'-'+quote_currency == LOGICAL_PARAMS['PAIR']
 
-    cmo = cmo_logic_no_pandas()
+    cmo = coinbase_cmo_logic_no_pandas(pair=LOGICAL_PARAMS['PAIR'], period=LOGICAL_PARAMS['PERIOD'])
 
-    all_tickers = PublicClient.get_product_ticker(product_id='BTC-USD')
-    ticker = all_tickers[LOGICAL_PARAMS['PAIR']]
-    rate = float(ticker['ask'])
+    product_details = PublicClient().get_product_ticker(product_id='BTC-USD')
+    rate = float(product_details['ask'])
     price = LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE']  # of base currency
     entry_amount = price/rate
 
     # asset oversold
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
         response = enter_position(
-            poloniex_wrapper,
+            coinbase_wrapper,
             pair=LOGICAL_PARAMS['PAIR'],
             rate=rate,
             amount=entry_amount
@@ -121,7 +136,7 @@ def lambda_handler(event, context):
     # asset overbought
     elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
         response = close_positions(
-            poloniex_wrapper,
+            coinbase_wrapper,
             pair=LOGICAL_PARAMS['PAIR'],
             rate=rate,
             amount=entry_amount
@@ -129,8 +144,8 @@ def lambda_handler(event, context):
     else:
         response = 'no trades'
 
-    print(f"{base_currency} balance: {poloniex_wrapper.private_query(command='returnBalances')[base_currency]}")
-    print(f"{quote_currency} balance: {poloniex_wrapper.private_query(command='returnBalances')[quote_currency]}")
+    print(f"{base_currency} balance: {get_balance(coinbase_wrapper, ticker=base_currency)['balance']}")
+    print(f"{quote_currency} balance: {get_balance(coinbase_wrapper, ticker=quote_currency)['balance']}")
 
     print(f'CMO: {cmo}')
     print(f'response: {response}')

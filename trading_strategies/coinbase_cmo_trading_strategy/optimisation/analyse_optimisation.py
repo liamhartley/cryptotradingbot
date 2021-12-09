@@ -2,7 +2,7 @@ import pandas as pd
 import pandasql as ps
 
 # 180 days multiple periods
-filepath = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/optimisation/backtesting_results.csv'
+filepath = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/optimisation/sol_optimisation.csv'
 
 
 if __name__ == '__main__':
