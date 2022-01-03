@@ -21,7 +21,8 @@ variable "AWS_SECRET_KEY" {
 }
 
 variable "region" {
-  default = "eu-west-1"
+  type = string
+  default = ""
 }
 
 # strategy variables - OPTIONAL
@@ -33,6 +34,22 @@ variable "POLONIEX_KEY" {
 }
 
 variable "POLONIEX_SECRET" {
+  type = string
+  default = ""
+}
+
+# coinbase strategies
+variable "COINBASE_API_KEY" {
+  type = string
+  default = ""
+}
+
+variable "COINBASE_API_SECRET" {
+  type = string
+  default = ""
+}
+
+variable "COINBASE_PASSPHRASE" {
   type = string
   default = ""
 }

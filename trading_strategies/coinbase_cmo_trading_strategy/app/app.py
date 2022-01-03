@@ -27,12 +27,12 @@ def get_balance(coinbase_wrapper, ticker: str):
 def close_positions(coinbase_wrapper, pair, rate, amount):
     '''
 
-    :param currency_pair: A string that defines the market, "USDT_BTC" for example.
-    :param rate: The price. Units are market quote currency. Eg USDT_BTC market, the value of this field would be around 10,000. Naturally this will be dated quickly but should give the idea.
+    :param currency_pair: A string that defines the market, "ETH-USDC" for example.
+    :param rate: The price. Units are market quote currency. Eg ETH-USDC market, the value of this field would be around 10,000. Naturally this will be dated quickly but should give the idea.
     :param amount: The total amount offered in this buy order.
     :return:
     '''
-    print('closing position')
+    print('-----closing position-----')
     print(f'entry_amount: {amount}')
     print(f'rate: {rate}')
     print(f'ticker: {pair}')
@@ -40,29 +40,20 @@ def close_positions(coinbase_wrapper, pair, rate, amount):
     # base_currency = LOGICAL_PARAMS['PAIR'].split('-')[0]
     quote_currency = LOGICAL_PARAMS['PAIR'].split('-')[1]
 
-    # if we have any of our quote_currency #TODO check the output for the .get_accounts() below
+    # if we have any of our quote_currency
     if float(get_balance(coinbase_wrapper, ticker=quote_currency)['balance']) > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
-        # sell the entire balance of our base currency
         response = coinbase_wrapper.sell(
-            price=rate,
-            size=amount,
+            # price=rate, not required for a market order
+            size=str(round(amount, 8)),
             order_type='market',
             product_id=pair
         )
     elif LOGICAL_PARAMS["DRY_RUN"] is True:
         print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {pair['highestBid']}")
-        response = {'orderNumber': '514845991795',
-                    'resultingTrades': [
-                        {'amount': '3.0',
-                         'date': '2018-10-25 23:03:21',
-                         'rate': '0.0002',
-                         'total': '0.0006',
-                         'tradeID': '251834',
-                         'type': 'sell'}
-                    ],
-                    'fee': '0.01000000',
-                    'clientOrderId': '12345',
-                    'currencyPair': 'BTC_ETH'}
+        response = {'id': '0f27c0ce-5705-43e6-972a-c611ace696be', 'size': '0.00265321', 'product_id': 'ETH-USDC',
+                    'side': 'sell', 'stp': 'dc', 'type': 'market', 'post_only': False,
+                    'created_at': '2021-12-23T13:54:24.581751Z', 'fill_fees': '0', 'filled_size': '0',
+                    'executed_value': '0', 'status': 'pending', 'settled': False}
     else:
         response = None
 
@@ -72,35 +63,27 @@ def close_positions(coinbase_wrapper, pair, rate, amount):
 def enter_position(coinbase_wrapper, pair, rate, amount):
     '''
 
-    :param currency_pair: A string that defines the market, "USDT_BTC" for example.
-    :param rate: The price. Units are market quote currency. Eg USDT_BTC market, the value of this field would be around 10,000. Naturally this will be dated quickly but should give the idea.
+    :param currency_pair: A string that defines the market, "ETH-USDC" for example.
+    :param rate: The price. Units are market quote currency. Eg ETH-USDC market, the value of this field would be around 10,000. Naturally this will be dated quickly but should give the idea.
     :param amount: The total amount offered in this buy order.
     :return:
     '''
-    print('entering position')
+    print('-----entering position-----')
     print(f'entry_amount: {amount}')
     print(f'rate: {rate}')
     print(f'ticker: {pair}')
 
     if LOGICAL_PARAMS["DRY_RUN"] is False:
-        response = coinbase_wrapper.buy(price=rate,
-                                        size=amount,
+        response = coinbase_wrapper.buy(# price=str(rate), not required for a market order
+                                        size=str(round(amount, 8)),
                                         order_type='market',
                                         product_id=pair)
     else:
         print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {amount}\npurchase price: {pair['lowestAsk']} ")
-        response = {'orderNumber': '514845991795',
-                    'resultingTrades': [
-                        {'amount': '3.0',
-                         'date': '2018-10-25 23:03:21',
-                         'rate': '0.0002',
-                         'total': '0.0006',
-                         'tradeID': '251834',
-                         'type': 'buy'}
-                    ],
-                    'fee': '0.01000000',
-                    'clientOrderId': '12345',
-                    'currencyPair': 'BTC_ETH'}
+        response = {'id': 'a118497f-702e-4d11-a8d4-443e50a94d8d', 'size': '0.00265487', 'product_id': 'ETH-USDC', 'side': 'buy',
+                    'stp': 'dc', 'funds': '105.45273631', 'type': 'market', 'post_only': False,
+                    'created_at': '2021-12-23T13:44:40.753983Z', 'fill_fees': '0', 'filled_size': '0', 'executed_value': '0',
+                    'status': 'pending', 'settled': False}
 
     return response
 
@@ -108,9 +91,9 @@ def enter_position(coinbase_wrapper, pair, rate, amount):
 def lambda_handler(event, context):
 
     coinbase_wrapper = AuthenticatedClient(
-        key=os.getenv('API_KEY'),
-        b64secret=os.getenv('API_SECRET'),
-        passphrase=os.getenv('PASSPHRASE'),
+        key=os.getenv('COINBASE_API_KEY'),
+        b64secret=os.getenv('COINBASE_API_SECRET'),
+        passphrase=os.getenv('COINBASE_PASSPHRASE'),
         api_url="https://api.pro.coinbase.com"
     )
 
@@ -120,11 +103,10 @@ def lambda_handler(event, context):
 
     cmo = coinbase_cmo_logic_no_pandas(pair=LOGICAL_PARAMS['PAIR'], period=LOGICAL_PARAMS['PERIOD'])
 
-    product_details = PublicClient().get_product_ticker(product_id='BTC-USD')
+    product_details = PublicClient().get_product_ticker(product_id=LOGICAL_PARAMS['PAIR'])
     rate = float(product_details['ask'])
     price = LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE']  # of base currency
     entry_amount = price/rate
-
     # asset oversold
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
         response = enter_position(
@@ -149,6 +131,7 @@ def lambda_handler(event, context):
 
     print(f'CMO: {cmo}')
     print(f'response: {response}')
+    print('Logical parameters:')
     for key in LOGICAL_PARAMS:
         print(f'{key}: {LOGICAL_PARAMS[key]}')
 

@@ -1,14 +1,10 @@
 LOGICAL_PARAMS = {
-    "CMO_PERIOD": 7,
-    "PERIOD": 7200,
-    "PAIR": "AMP_USDT",
-    "OVERSOLD_VALUE": -50,
-    "OVERBOUGHT_VALUE": 39,
-    "DRY_RUN": False,
-    "INITIAL_CAPITAL": 0.018,  # in quote currency # TODO
-    "ENTRY_SIZE": 0.1  # 10%
-}
-
-INFRASTRUCTURE_PARAMS = {
-    "AWS_REGION": "eu-west-1"
+    "CMO_PERIOD": 7,  # number of days that CMO is calculated over
+    "PERIOD": 7200,  # period that data is received
+    "PAIR": "BTC_XRP",  # crypto pair to trade
+    "OVERSOLD_VALUE": -50,  # CMO threshold value to buy at
+    "OVERBOUGHT_VALUE": 39,  # CMO threshold value to sell at
+    "DRY_RUN": True,  # when True the bot will not execute trades
+    "INITIAL_CAPITAL": 0.018,  # currency at deployment (in quote currency)
+    "ENTRY_SIZE": 0.1  # size of trade to buy/sell (e.g. 0.1=10% of INITIAL_CAPITAL)
 }

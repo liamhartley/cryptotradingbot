@@ -57,6 +57,7 @@ def cmo_logic_no_pandas():
     cmo = ((higher_close_price - lower_close_price) / (higher_close_price + lower_close_price)) * 100
     print(f'higher_close_price: {higher_close_price}')
     print(f'lower_close_price: {lower_close_price}')
+    print(f'cmo: {cmo}')
     return cmo
 
 
