@@ -2,7 +2,7 @@
 echo $BASH_VERSION
 
 # Set the name of your custom workspace
-workspace_name="coinbase-cmo"
+workspace_name="coinbase-cmo-1"
 
 # run this script in the root directory after defining the filepaths below to deploy your trading strategy
 lambda_zip_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload.zip"
@@ -15,7 +15,7 @@ infrastructure_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/clo
 declare -A scripts=(
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/app.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/config.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_strategies/coinbase_cmo_trading_strategy/"
-                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/coinbase_cmo_calculation.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_tools/"
+                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_cmo_calculation.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_tools/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/coinbase_pro_wrapper/authenticated_client.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_tools/coinbase_pro_wrapper/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/coinbase_pro_wrapper/public_client.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_tools/coinbase_pro_wrapper/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/coinbase_pro_wrapper/cbpro_auth.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_tools/coinbase_pro_wrapper/"
@@ -43,6 +43,5 @@ terraform workspace new $workspace_name || echo "Workspace $workspace_name alrea
 terraform workspace select $workspace_name
 
 terraform init
-
 
 terraform apply -lock=false

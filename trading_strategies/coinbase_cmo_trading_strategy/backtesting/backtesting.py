@@ -7,18 +7,19 @@ from gemini.helpers import poloniex, analyze
 from trading_tools.coinbase_cmo_calculation import coinbase_cmo_logic_no_pandas
 from trading_strategies.coinbase_cmo_trading_strategy.config import LOGICAL_PARAMS
 from trading_tools.coinbase_pro_wrapper.public_client import PublicClient
+from trading_tools.poloniex_cmo_calculation import poloniex_cmo_logic_no_pandas
 
 # PERIOD_DICTIONARY = {7200: '2H'}
 # PERIOD_DICTIONARY = {86400: '1D', 21600: '6H', 3600: '1H', 900: '0.25H', 300: '5M', 60: '1M'}
 # PERIOD_DICTIONARY = {86400: '1D', 21600: '6H', 3600: '1H', 900: '0.25H'}
 PERIOD_DICTIONARY = {86400: '1D', 21600: '6H'} #, 3600: '1H', 900: '0.25H'}
-OUTPUT_FILEPATH = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/optimisation/eth_backtesting_results_1.csv'
-# CMO_PERIODS = [7, 8, 9, 10, 11, 12]
-CMO_PERIODS = [10, 11, 12]
+OUTPUT_FILEPATH = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/optimisation/check_eth_backtesting_results_1.csv'
+CMO_PERIODS = [7, 8, 9, 10, 11, 12]
+# CMO_PERIODS = [10, 11, 12]
 DAYS_HISTORY = 180
 OVERBOUGHT_VALUEs = [40, 45, 50, 55, 60]
 OVERSOLD_VALUEs = [-60, -55, -50, -45, -40]
-CAPITAL_BASE = 1
+CAPITAL_BASE = 1000
 ENTRY_SIZE_LIST = [CAPITAL_BASE*0.05, CAPITAL_BASE*0.1, CAPITAL_BASE*0.15, CAPITAL_BASE*0.2, CAPITAL_BASE*0.25, CAPITAL_BASE*0.30,
                    CAPITAL_BASE*0.35, CAPITAL_BASE*0.40, CAPITAL_BASE*0.45, CAPITAL_BASE*0.5]
 
@@ -93,14 +94,17 @@ def cmo_logic(data) -> float:
             higher_close_price += 1
         elif data['close'][ticker] < data['open'][ticker]:
             lower_close_price += 1
-
+    print(f'higher close price: {higher_close_price}')
+    print(f'lower close price: {lower_close_price}')
     cmo = ((higher_close_price - lower_close_price) / (higher_close_price + lower_close_price)) * 100
+    print(f'cmo: {cmo}')
 
     return cmo
 
 
 def cmo_trading_strategy(gemini, data):
     if len(data) >= CMO_PERIOD:
+        cmo = poloniex_cmo_logic_no_pandas(pair=quote_currency+'_'+base_currency)
         cmo = cmo_logic(data)
         assert -100 <= cmo <= 100
 

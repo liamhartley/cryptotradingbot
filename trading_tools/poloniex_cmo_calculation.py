@@ -1,6 +1,7 @@
 import time
 import requests
-from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS
+# from trading_strategies.poloniex_cmo_trading_strategy.config import LOGICAL_PARAMS
+from trading_strategies.coinbase_cmo_trading_strategy.config import LOGICAL_PARAMS
 
 
 def get_past(pair, period, days_history=30):
@@ -31,7 +32,8 @@ def poloniex_cmo_logic_no_pandas(pair: str):
         period=LOGICAL_PARAMS["PERIOD"],
         days_history=LOGICAL_PARAMS["CMO_PERIOD"]
     )
-
+    # Get the last x days of data with respect to the cmo period (-1s for 0 index and having one extra day)
+    response_json = response_json[len(response_json) - 1 - LOGICAL_PARAMS["CMO_PERIOD"] - 1:len(response_json) - 1]
     print(f'historical data: {response_json}')
 
     higher_close_price = 0

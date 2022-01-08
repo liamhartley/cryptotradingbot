@@ -1,9 +1,10 @@
 import os
 
 from trading_strategies.coinbase_cmo_trading_strategy.config import LOGICAL_PARAMS
-from trading_tools.coinbase_cmo_calculation import coinbase_cmo_logic_no_pandas
 from trading_tools.coinbase_pro_wrapper.authenticated_client import AuthenticatedClient
 from trading_tools.coinbase_pro_wrapper.public_client import PublicClient
+# from trading_tools.coinbase_cmo_calculation import coinbase_cmo_logic_no_pandas
+from trading_tools.poloniex_cmo_calculation import poloniex_cmo_logic_no_pandas
 
 
 def get_balance(coinbase_wrapper, ticker: str):
@@ -32,7 +33,7 @@ def close_positions(coinbase_wrapper, pair, rate, amount):
     :param amount: The total amount offered in this buy order.
     :return:
     '''
-    print('-----closing position-----')
+    print('----- closing position -----')
     print(f'entry_amount: {amount}')
     print(f'rate: {rate}')
     print(f'ticker: {pair}')
@@ -44,12 +45,12 @@ def close_positions(coinbase_wrapper, pair, rate, amount):
     if float(get_balance(coinbase_wrapper, ticker=quote_currency)['balance']) > 0 and LOGICAL_PARAMS["DRY_RUN"] is False:
         response = coinbase_wrapper.sell(
             # price=rate, not required for a market order
-            size=str(round(amount, 8)),
+            size=round(amount, 8),
             order_type='market',
             product_id=pair
         )
     elif LOGICAL_PARAMS["DRY_RUN"] is True:
-        print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {pair['highestBid']}")
+        print(f"closing {LOGICAL_PARAMS['PAIR']}\nsale price: {rate}")
         response = {'id': '0f27c0ce-5705-43e6-972a-c611ace696be', 'size': '0.00265321', 'product_id': 'ETH-USDC',
                     'side': 'sell', 'stp': 'dc', 'type': 'market', 'post_only': False,
                     'created_at': '2021-12-23T13:54:24.581751Z', 'fill_fees': '0', 'filled_size': '0',
@@ -68,7 +69,7 @@ def enter_position(coinbase_wrapper, pair, rate, amount):
     :param amount: The total amount offered in this buy order.
     :return:
     '''
-    print('-----entering position-----')
+    print('----- entering position -----')
     print(f'entry_amount: {amount}')
     print(f'rate: {rate}')
     print(f'ticker: {pair}')
@@ -101,27 +102,27 @@ def lambda_handler(event, context):
     quote_currency = LOGICAL_PARAMS['PAIR'].split('-')[1]
     assert base_currency+'-'+quote_currency == LOGICAL_PARAMS['PAIR']
 
-    cmo = coinbase_cmo_logic_no_pandas(pair=LOGICAL_PARAMS['PAIR'], period=LOGICAL_PARAMS['PERIOD'])
+    cmo = poloniex_cmo_logic_no_pandas(pair=quote_currency+'_'+base_currency)
 
     product_details = PublicClient().get_product_ticker(product_id=LOGICAL_PARAMS['PAIR'])
-    rate = float(product_details['ask'])
-    price = LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE']  # of base currency
-    entry_amount = price/rate
+    ask_price = float(product_details['ask'])
+    trade_size = LOGICAL_PARAMS['INITIAL_CAPITAL'] * LOGICAL_PARAMS['ENTRY_SIZE']  # of base currency
+    exit_amount = trade_size/ask_price
     # asset oversold
     if cmo < LOGICAL_PARAMS["OVERSOLD_VALUE"]:
         response = enter_position(
             coinbase_wrapper,
             pair=LOGICAL_PARAMS['PAIR'],
-            rate=rate,
-            amount=entry_amount
+            rate=ask_price,
+            amount=trade_size
         )
     # asset overbought
     elif cmo > LOGICAL_PARAMS["OVERBOUGHT_VALUE"]:
         response = close_positions(
             coinbase_wrapper,
             pair=LOGICAL_PARAMS['PAIR'],
-            rate=rate,
-            amount=entry_amount
+            rate=ask_price,
+            amount=exit_amount
         )
     else:
         response = 'no trades'
