@@ -18,7 +18,7 @@ module "entering_position_log_metric_filter" {
   log_group_name = "/aws/lambda/${aws_lambda_function.cryptotradingbot.function_name}"
 
   name    = "${var.PROJECT_NAME}-entering-position-metric"
-  pattern = var.OPENING_PATTERN
+  pattern = "entering position"
 
   metric_transformation_namespace = "${var.PROJECT_NAME}-entering-position-namespace"
   metric_transformation_name      = "${var.PROJECT_NAME}-entering-position-metric-name"
@@ -51,7 +51,7 @@ module "closing_position_log_metric_filter" {
   log_group_name = "/aws/lambda/${aws_lambda_function.cryptotradingbot.function_name}"
 
   name    = "${var.PROJECT_NAME}-closing-position-metric"
-  pattern = var.CLOSING_PATTERN
+  pattern = "closing position"
 
   metric_transformation_namespace = "${var.PROJECT_NAME}-closing-position-namespace"
   metric_transformation_name      = "${var.PROJECT_NAME}-closing-position-metric-name"
