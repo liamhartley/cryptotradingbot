@@ -80,7 +80,7 @@ def enter_position(coinbase_wrapper, pair, rate, amount):
                                         order_type='market',
                                         product_id=pair)
     else:
-        print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {amount}\npurchase price: {pair['lowestAsk']} ")
+        print(f"opening: {LOGICAL_PARAMS['PAIR']}\nsize: {amount}\npurchase price: {rate} ")
         response = {'id': 'a118497f-702e-4d11-a8d4-443e50a94d8d', 'size': '0.00265487', 'product_id': 'ETH-USDC', 'side': 'buy',
                     'stp': 'dc', 'funds': '105.45273631', 'type': 'market', 'post_only': False,
                     'created_at': '2021-12-23T13:44:40.753983Z', 'fill_fees': '0', 'filled_size': '0', 'executed_value': '0',
