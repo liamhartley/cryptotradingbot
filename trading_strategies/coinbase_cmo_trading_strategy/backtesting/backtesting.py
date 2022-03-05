@@ -25,7 +25,7 @@ ENTRY_SIZE_LIST = [CAPITAL_BASE*0.05, CAPITAL_BASE*0.1, CAPITAL_BASE*0.15, CAPIT
 
 # PAIRS = ['ETH_USDC', 'USDC_SOL']
 # PAIRS = ['ETH-USDC', 'SOL-USDC']
-PAIRS = ['ETH-USDC']
+PAIRS = ['ETH_USDC']
 # PAIRS = ['SOL-USDT']
 
 # PAIRS = ['XRP_BTC']
@@ -104,8 +104,8 @@ def cmo_logic(data) -> float:
 
 def cmo_trading_strategy(gemini, data):
     if len(data) >= CMO_PERIOD:
-        cmo = poloniex_cmo_logic_no_pandas(pair=quote_currency+'_'+base_currency)
-        cmo = cmo_logic(data)
+        cmo = poloniex_cmo_logic_no_pandas(pair=PAIRS[0])
+        # cmo = cmo_logic(data)
         assert -100 <= cmo <= 100
 
         if cmo < OVERSOLD_VALUE:
@@ -147,14 +147,14 @@ if __name__ == '__main__':
                             }
 
                             # load backtesting data
-                            # data_df = poloniex.load_dataframe(pair=PAIR, period=poloniex_period, days_history=DAYS_HISTORY)
-                            data = PublicClient().get_product_historic_rates(product_id=PAIR, granularity=poloniex_period)
-                            headers = ['time', 'low', 'high', 'open', 'close', 'volume'],
-                            df = pd.DataFrame(data)
-                            df.columns = headers[0]
-                            df['time'] = pd.to_datetime(df['time'], unit='s')
-                            df = df.set_index('time')
-                            df = df.reindex(columns=['high', 'low', 'open', 'close', 'volume'])
+                            df = poloniex.load_dataframe(pair=PAIR, period=poloniex_period, days_history=DAYS_HISTORY)
+                            # data = PublicClient().get_product_historic_rates(product_id=PAIR, granularity=poloniex_period)
+                            # headers = ['time', 'low', 'high', 'open', 'close', 'volume'],
+                            # df = pd.DataFrame(data)
+                            # df.columns = headers[0]
+                            # df['time'] = pd.to_datetime(df['time'], unit='s')
+                            # df = df.set_index('time')
+                            # df = df.reindex(columns=['high', 'low', 'open', 'close', 'volume'])
 
                             backtesting_engine = Gemini(logic=cmo_trading_strategy, sim_params=params, analyze=analyze.analyze_bokeh)
 
