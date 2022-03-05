@@ -9,11 +9,13 @@ from trading_strategies.coinbase_cmo_trading_strategy.config import LOGICAL_PARA
 from trading_tools.coinbase_pro_wrapper.public_client import PublicClient
 from trading_tools.poloniex_cmo_calculation import poloniex_cmo_logic_no_pandas
 
-# PERIOD_DICTIONARY = {7200: '2H'}
 # PERIOD_DICTIONARY = {86400: '1D', 21600: '6H', 3600: '1H', 900: '0.25H', 300: '5M', 60: '1M'}
-# PERIOD_DICTIONARY = {86400: '1D', 21600: '6H', 3600: '1H', 900: '0.25H'}
-PERIOD_DICTIONARY = {86400: '1D', 21600: '6H'} #, 3600: '1H', 900: '0.25H'}
-OUTPUT_FILEPATH = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/optimisation/check_eth_backtesting_results_1.csv'
+PERIOD_DICTIONARY = {86400: '1D'}
+
+# PERIOD_DICTIONARY = {86400: '1D', 14400: '4H', 7200: '2H', 1800: '0.5H', 900: '0.25H'}  # Poloniex API
+# PERIOD_DICTIONARY = {86400: '1D', 7200: '2H'}  # Poloniex API
+
+OUTPUT_FILEPATH = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/optimisation/eth_backtesting_results.csv'
 CMO_PERIODS = [7, 8, 9, 10, 11, 12]
 # CMO_PERIODS = [10, 11, 12]
 DAYS_HISTORY = 180
@@ -25,8 +27,9 @@ ENTRY_SIZE_LIST = [CAPITAL_BASE*0.05, CAPITAL_BASE*0.1, CAPITAL_BASE*0.15, CAPIT
 
 # PAIRS = ['ETH_USDC', 'USDC_SOL']
 # PAIRS = ['ETH-USDC', 'SOL-USDC']
-PAIRS = ['ETH_USDC']
-# PAIRS = ['SOL-USDT']
+PAIRS = ['ETH-USDC']
+# PAIRS = ['ETH_USDC']
+# PAIRS = ['SOL_USDT']
 
 # PAIRS = ['XRP_BTC']
 # PAIRS = ['AMP_USDT']
@@ -82,30 +85,12 @@ PAIRS = ['ETH_USDC']
 # ]
 
 
-def cmo_logic(data) -> float:
-    last_day = len(data)
-    first_day = len(data) - CMO_PERIOD
-
-    higher_close_price = 0
-    lower_close_price = 0
-
-    for ticker in range(first_day, last_day):
-        if data['close'][ticker] > data['open'][ticker]:
-            higher_close_price += 1
-        elif data['close'][ticker] < data['open'][ticker]:
-            lower_close_price += 1
-    print(f'higher close price: {higher_close_price}')
-    print(f'lower close price: {lower_close_price}')
-    cmo = ((higher_close_price - lower_close_price) / (higher_close_price + lower_close_price)) * 100
-    print(f'cmo: {cmo}')
-
-    return cmo
-
-
 def cmo_trading_strategy(gemini, data):
+    base_currency = LOGICAL_PARAMS['PAIR'].split('-')[0]
+    quote_currency = LOGICAL_PARAMS['PAIR'].split('-')[1]
     if len(data) >= CMO_PERIOD:
-        cmo = poloniex_cmo_logic_no_pandas(pair=PAIRS[0])
-        # cmo = cmo_logic(data)
+        # cmo = poloniex_cmo_logic_no_pandas(pair=quote_currency+'_'+base_currency, period=api_period)
+        cmo = coinbase_cmo_logic_no_pandas(pair=LOGICAL_PARAMS['PAIR'], period=api_period)
         assert -100 <= cmo <= 100
 
         if cmo < OVERSOLD_VALUE:
@@ -129,7 +114,7 @@ if __name__ == '__main__':
         # PAIR = PAIR[:-1]
         for OVERSOLD_VALUE in OVERSOLD_VALUEs:
             for OVERBOUGHT_VALUE in OVERBOUGHT_VALUEs:
-                for poloniex_period, gemini_period in PERIOD_DICTIONARY.items():
+                for api_period, gemini_period in PERIOD_DICTIONARY.items():
                     for cmo_period in CMO_PERIODS:
                         global CMO_PERIOD
                         CMO_PERIOD = cmo_period
@@ -147,14 +132,14 @@ if __name__ == '__main__':
                             }
 
                             # load backtesting data
-                            df = poloniex.load_dataframe(pair=PAIR, period=poloniex_period, days_history=DAYS_HISTORY)
-                            # data = PublicClient().get_product_historic_rates(product_id=PAIR, granularity=poloniex_period)
-                            # headers = ['time', 'low', 'high', 'open', 'close', 'volume'],
-                            # df = pd.DataFrame(data)
-                            # df.columns = headers[0]
-                            # df['time'] = pd.to_datetime(df['time'], unit='s')
-                            # df = df.set_index('time')
-                            # df = df.reindex(columns=['high', 'low', 'open', 'close', 'volume'])
+                            # data_df = poloniex.load_dataframe(pair=PAIR, period=poloniex_period, days_history=DAYS_HISTORY)
+                            data = PublicClient().get_product_historic_rates(product_id=PAIR, granularity=poloniex_period)
+                            headers = ['time', 'low', 'high', 'open', 'close', 'volume'],
+                            df = pd.DataFrame(data)
+                            df.columns = headers[0]
+                            df['time'] = pd.to_datetime(df['time'], unit='s')
+                            df = df.set_index('time')
+                            df = df.reindex(columns=['high', 'low', 'open', 'close', 'volume'])
 
                             backtesting_engine = Gemini(logic=cmo_trading_strategy, sim_params=params, analyze=analyze.analyze_bokeh)
 

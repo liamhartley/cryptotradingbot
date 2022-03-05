@@ -1,3 +1,27 @@
+### strategy specific variables
+
+# poloniex
+//variable "CLOSING_PATTERN" {
+//  type = string
+//  default = "closing position"
+//}
+//
+//variable "opening_PATTERN" {
+//  type = string
+//  default = "opening position"
+//}
+
+# coinbase
+variable "CLOSING_PATTERN" {
+  type = string
+  default = "'side': 'sell'"
+}
+
+variable "OPENING_PATTERN" {
+  type = string
+  default = "'side': 'buy'"
+}
+
 # generic variables - MUST BE DEFINED
 
 variable "PROJECT_NAME" {

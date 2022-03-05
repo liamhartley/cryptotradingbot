@@ -26,10 +26,10 @@ def get_past(pair, period, days_history=30):
     return response.json()
 
 
-def poloniex_cmo_logic_no_pandas(pair: str):
+def poloniex_cmo_logic_no_pandas(pair: str, period: int):
     response_json = get_past(
         pair=pair,
-        period=LOGICAL_PARAMS["PERIOD"],
+        period=period,
         days_history=LOGICAL_PARAMS["CMO_PERIOD"]
     )
     # Get the last x days of data with respect to the cmo period (-1s for 0 index and having one extra day)
@@ -44,14 +44,15 @@ def poloniex_cmo_logic_no_pandas(pair: str):
     for day in response_json:
         if previous_day is not False:
             if day['close'] > previous_day['close']:
-                higher_close_price += 1
+                higher_close_price += day['close'] - previous_day['close']
             elif day['close'] < previous_day['close']:
-                lower_close_price += 1
+                lower_close_price += previous_day['close'] - day['close']
         previous_day = day
 
     cmo = ((higher_close_price - lower_close_price) / (higher_close_price + lower_close_price)) * 100
     print(f'higher_close_price: {higher_close_price}')
     print(f'lower_close_price: {lower_close_price}')
+    print(f'CMO: {cmo}')
     return cmo
 
 
