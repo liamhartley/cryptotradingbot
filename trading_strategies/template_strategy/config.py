@@ -7,7 +7,3 @@ LOGICAL_PARAMS = {
     "INITIAL_CAPITAL": 100,  # in quote currency
     "ENTRY_SIZE": 0.1  # 10%
 }
-
-INFRASTRUCTURE_PARAMS = {
-    "AWS_REGION": "eu-west-1"
-}

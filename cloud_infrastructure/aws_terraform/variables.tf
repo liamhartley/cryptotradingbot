@@ -1,3 +1,27 @@
+### strategy specific variables
+
+# poloniex
+//variable "CLOSING_PATTERN" {
+//  type = string
+//  default = "closing position"
+//}
+//
+//variable "opening_PATTERN" {
+//  type = string
+//  default = "opening position"
+//}
+
+# coinbase
+variable "CLOSING_PATTERN" {
+  type = string
+  default = "'side': 'sell'"
+}
+
+variable "OPENING_PATTERN" {
+  type = string
+  default = "'side': 'buy'"
+}
+
 # generic variables - MUST BE DEFINED
 
 variable "PROJECT_NAME" {
@@ -21,7 +45,8 @@ variable "AWS_SECRET_KEY" {
 }
 
 variable "region" {
-  default = "eu-west-1"
+  type = string
+  default = ""
 }
 
 # strategy variables - OPTIONAL
@@ -33,6 +58,22 @@ variable "POLONIEX_KEY" {
 }
 
 variable "POLONIEX_SECRET" {
+  type = string
+  default = ""
+}
+
+# coinbase strategies
+variable "COINBASE_API_KEY" {
+  type = string
+  default = ""
+}
+
+variable "COINBASE_API_SECRET" {
+  type = string
+  default = ""
+}
+
+variable "COINBASE_PASSPHRASE" {
   type = string
   default = ""
 }

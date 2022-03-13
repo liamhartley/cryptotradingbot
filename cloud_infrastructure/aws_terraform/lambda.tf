@@ -9,7 +9,10 @@ resource "aws_lambda_function" "cryptotradingbot" {
   environment {
     variables = {
       POLONIEX_KEY = var.POLONIEX_KEY,
-      POLONIEX_SECRET = var.POLONIEX_SECRET
+      POLONIEX_SECRET = var.POLONIEX_SECRET,
+      COINBASE_API_KEY = var.COINBASE_API_KEY,
+      COINBASE_API_SECRET = var.COINBASE_API_SECRET,
+      COINBASE_PASSPHRASE = var.COINBASE_PASSPHRASE
     }
   }
 }

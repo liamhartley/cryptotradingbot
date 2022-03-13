@@ -5,18 +5,18 @@ from gemini.helpers import poloniex, analyze
 
 # PERIOD_DICTIONARY = {7200: '2H'}
 PERIOD_DICTIONARY = {86400: '1D', 14400: '4H', 7200: '2H', 1800: '0.5H', 900: '0.25H'}
-OUTPUT_FILEPATH = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/optimisation/optimisation_results_entry_size.csv'
+OUTPUT_FILEPATH = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/poloniex_cmo_trading_strategy/optimisation/sol_optimisation.csv'
 CMO_PERIODS = [7, 8, 9, 10]
 DAYS_HISTORY = 180
 OVERBOUGHT_VALUE = 50
 OVERSOLD_VALUE = -50
-CAPITAL_BASE = 10
+CAPITAL_BASE = 1000
 ENTRY_SIZE_LIST = [CAPITAL_BASE*0.1, CAPITAL_BASE*0.15, CAPITAL_BASE*0.2, CAPITAL_BASE*0.25, CAPITAL_BASE*0.30,
                    CAPITAL_BASE*0.35, CAPITAL_BASE*0.40, CAPITAL_BASE*0.45, CAPITAL_BASE*0.5, CAPITAL_BASE*0.55]
 
 # PAIRS = ['XRP_BTC']
-PAIRS = ['AMP_USDT']
-# PAIRS = ['BTC_XRP']
+# PAIRS = ['AMP_USDT']
+PAIRS = ['SOL_USDT']
 
 # PAIRS = [
 #     'BTC_USDT\n',
