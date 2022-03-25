@@ -1,4 +1,4 @@
-# Poloniex CMO Trading Strategy
+# Coinbase CMO Trading Strategy
 
 ## Contents
 0. [Overview](#overview)
@@ -27,14 +27,14 @@ The opposite is also true, overbought assets (CMO > overbought threshold) will c
 <a name="projectarchitecture"></a>
 ## Project Architecture 
 
-<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/trading_strategies/poloniex_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">
+<img src="https://github.com/liamhartley/cryptotradingbot/blob/master/trading_strategies/coinbase_cmo_trading_strategy/docs/cmo_trading_architecture.png" width="500px">
 
 #### Architecture Overview
 
 - Terraform deploys all the infrastructure into AWS
 - Cloudwatch is the trigger which kicks off the Lambda function
 - The Lambda function contains the trading logic which is written in Python
-- This logic uses the Poloniex API to connect to the exchange
+- This logic uses the Coinbase Pro API to connect to the exchange
 - Every decision that the Lambda takes is logged into to Cloudwatch for auditing
 
 
@@ -94,12 +94,10 @@ Please feel free to reach out to me to check if a feature isn't already in devel
 ## Further Reading
 - Read more about the project [my blog](https://medium.datadriveninvestor.com/deploying-a-bitcoin-trading-bot-eb9998dfc0f5)
 - [CMO by Investopedia](https://www.investopedia.com/terms/c/chandemomentumoscillator.asp)
-- [Poloniex Exchange](https://poloniex.com)
 
 <a name="acknowledgements"></a>
 ## Acknowledgements 
 - [The Gemini crypto backtesting engine](https://github.com/anfederico/Gemini) by anfederico 
-- [The Poloniex wrapper](https://github.com/bwentzloff/trading-bot) by bwentzloff
 
 <a name="donations"></a>
 ## Donations 
