@@ -133,7 +133,8 @@ if __name__ == '__main__':
 
                             # load backtesting data
                             # data_df = poloniex.load_dataframe(pair=PAIR, period=poloniex_period, days_history=DAYS_HISTORY)
-                            data = PublicClient().get_product_historic_rates(product_id=PAIR, granularity=poloniex_period)
+                            data = PublicClient().get_product_historic_rates(product_id=PAIR, granularity=api_period)
+                            # data = PublicClient().get_product_historic_rates(product_id=PAIR, granularity=poloniex_period)
                             headers = ['time', 'low', 'high', 'open', 'close', 'volume'],
                             df = pd.DataFrame(data)
                             df.columns = headers[0]
