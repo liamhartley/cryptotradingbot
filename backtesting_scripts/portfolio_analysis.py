@@ -3,6 +3,8 @@ import os
 import time
 import pandas as pd
 
+# TODO pick out 5 coins from each selected category (large cap, mid cap and small cap), make an index by normalising each coin
+
 
 def bulk_data_transform(data_location):
     '''
