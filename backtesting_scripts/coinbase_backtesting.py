@@ -11,19 +11,18 @@ from trading_tools.poloniex_cmo_calculation import poloniex_cmo_logic_no_pandas
 
 # PERIOD_DICTIONARY = {86400: '1D', 21600: '6H', 3600: '1H', 900: '0.25H', 300: '5M', 60: '1M'}
 PERIOD_DICTIONARY = {86400: '1D'}
-
+poloniex_period = 86400
 # PERIOD_DICTIONARY = {86400: '1D', 14400: '4H', 7200: '2H', 1800: '0.5H', 900: '0.25H'}  # Poloniex API
 # PERIOD_DICTIONARY = {86400: '1D', 7200: '2H'}  # Poloniex API
 
-OUTPUT_FILEPATH = '/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/optimisation/eth_backtesting_results.csv'
-CMO_PERIODS = [7, 8, 9, 10, 11, 12]
+OUTPUT_FILEPATH = 'C:/Users/doseo/PycharmProjects/cryptotradingbot/output.csv'
+CMO_PERIODS = [7]
 # CMO_PERIODS = [10, 11, 12]
-DAYS_HISTORY = 180
-OVERBOUGHT_VALUEs = [40, 45, 50, 55, 60]
-OVERSOLD_VALUEs = [-60, -55, -50, -45, -40]
+DAYS_HISTORY = 5
+OVERBOUGHT_VALUEs = [40]
+OVERSOLD_VALUEs = [-60]
 CAPITAL_BASE = 1000
-ENTRY_SIZE_LIST = [CAPITAL_BASE*0.05, CAPITAL_BASE*0.1, CAPITAL_BASE*0.15, CAPITAL_BASE*0.2, CAPITAL_BASE*0.25, CAPITAL_BASE*0.30,
-                   CAPITAL_BASE*0.35, CAPITAL_BASE*0.40, CAPITAL_BASE*0.45, CAPITAL_BASE*0.5]
+ENTRY_SIZE_LIST = [CAPITAL_BASE*0.05]
 
 # PAIRS = ['ETH_USDC', 'USDC_SOL']
 # PAIRS = ['ETH-USDC', 'SOL-USDC']
@@ -84,6 +83,17 @@ PAIRS = ['ETH-USDC']
 #     'SC_BTC\n'
 # ]
 
+def jaz_trading(gemini, data):
+    if data.iloc[-1]["open"] > 3000:
+        gemini.account.enter_position(type_="Long",
+                                      entry_capital=ENTRY_SIZE,
+                                      entry_price=data.iloc[-1]['high'])
+        print(f'Open position @ {data.iloc[-1]["low"]}')
+    elif data.iloc[-1]["open"] < 3000:
+         gemini.account.close_position(position=gemini.account.positions[0],
+                                      percent=1,
+                                      price=data.iloc[-1]['low'])
+         print(f'Close position @ {data.iloc[-1]["low"]}')
 
 def cmo_trading_strategy(gemini, data):
     base_currency = LOGICAL_PARAMS['PAIR'].split('-')[0]
@@ -141,7 +151,7 @@ if __name__ == '__main__':
                             df = df.set_index('time')
                             df = df.reindex(columns=['high', 'low', 'open', 'close', 'volume'])
 
-                            backtesting_engine = Gemini(logic=cmo_trading_strategy, sim_params=params, analyze=analyze.analyze_bokeh)
+                            backtesting_engine = Gemini(logic=jaz_trading, sim_params=params, analyze=analyze.analyze_bokeh)
 
                             # run the backtesting engine
                             backtesting_engine.run(data=df)
