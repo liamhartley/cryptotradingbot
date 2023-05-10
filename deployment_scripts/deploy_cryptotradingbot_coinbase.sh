@@ -12,7 +12,7 @@ infrastructure_filepath="/Users/liamhartley/PycharmProjects/cryptotradingbot/clo
 # TODO make this its own function and pass in variables
 ########## required trading script paths ##########
 declare -A scripts=(
-                  ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/app.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/"
+                  ["/Users/liamhartley/Pycha  rmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/app.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/config.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_strategies/coinbase_cmo_trading_strategy/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/poloniex_cmo_calculation.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_tools/"
                   ["/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_tools/coinbase_pro_wrapper/authenticated_client.py"]="/Users/liamhartley/PycharmProjects/cryptotradingbot/trading_strategies/coinbase_cmo_trading_strategy/app/payload/trading_tools/coinbase_pro_wrapper/"
